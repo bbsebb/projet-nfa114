@@ -1,0 +1,28 @@
+version: "3.1"
+services: 
+  php: 
+    image: php:7.2-apache
+    container_name: php-nfa114-projet
+    volumes: 
+      - ./www:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+    ports:
+      - "8075:80"
+
+  db:
+    image: mysql
+    container_name: mysql-nfa114-projet
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ga9399ghr
+      MYSQL_DATABASE: db-projet
+      MYSQL_USER: user
+      MYSQL_PASSWORD: ga9399ghr
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8076:8080
