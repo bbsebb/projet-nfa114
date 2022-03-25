@@ -1,7 +1,7 @@
 version: "3.1"
 services: 
   php: 
-    image: php:7.2-apache
+    image: php-projet-nfa114
     container_name: php-nfa114-projet
     volumes: 
       - ./www:/var/www/html
