@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Bbsebb\\ProjetNfa114\\' => array($baseDir . '/src'),
+    'App\\' => array($baseDir . '/src'),
 );
