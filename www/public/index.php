@@ -5,7 +5,9 @@ $routeur = new AltoRouter();
 $routeur->map('GET','/', function() {
     require_once "view/home.php";
 });
-$routeur->match();
+$match = $routeur->match();
+$match["target"]();
+
 ?>
 
 <!-- <!DOCTYPE html>
