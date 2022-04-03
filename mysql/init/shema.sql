@@ -16,77 +16,59 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `db-projet` DEFAULT CHARACTER SET utf8 ;
 USE `db-projet` ;
+CREATE TABLE users(
+   id_users INT AUTO_INCREMENT,
+   email VARCHAR(50) ,
+   password VARCHAR(125) ,
+   name VARCHAR(50) ,
+   forname VARCHAR(50) ,
+   tel VARCHAR(50) ,
+   PRIMARY KEY(id_users)
+);
 
--- -----------------------------------------------------
--- Table `mydb`.`user`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db-projet`.`user` (
-  `id_user` INT NOT NULL,
-  `name` VARCHAR(20) NOT NULL,
-  `forename` VARCHAR(20) NULL,
-  `email` VARCHAR(45) NULL,
-  `password` VARCHAR(125) NULL,
-  PRIMARY KEY (`id_user`))
-ENGINE = InnoDB;
+CREATE TABLE roles(
+   id_roles INT AUTO_INCREMENT,
+   name VARCHAR(50) ,
+   PRIMARY KEY(id_roles)
+);
 
+CREATE TABLE status(
+   id_status INT AUTO_INCREMENT,
+   name VARCHAR(50) ,
+   PRIMARY KEY(id_status)
+);
 
--- -----------------------------------------------------
--- Table `mydb`.`role`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db-projet`.`role` (
-  `id_role` INT NOT NULL,
-  `name` VARCHAR(45) NULL,
-  PRIMARY KEY (`id_role`))
-ENGINE = InnoDB;
+CREATE TABLE appointment(
+	id_rdv INT AUTO_INCREMENT,
+   id_status INT,
+   date_rdv DATETIME,
+   PRIMARY KEY( id_rdv,id_status),
+   FOREIGN KEY(id_status) REFERENCES status(id_status)
+);
 
+CREATE TABLE has_role(
+   id_users INT,
+   id_roles INT,
+   PRIMARY KEY(id_users, id_roles),
+   FOREIGN KEY(id_users) REFERENCES users(id_users),
+   FOREIGN KEY(id_roles) REFERENCES roles(id_roles)
+);
 
--- -----------------------------------------------------
--- Table `mydb`.`user_has_role`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db-projet`.`user_has_role` (
-  `user_id_user` INT NOT NULL,
-  `role_id_role` INT NOT NULL,
-  PRIMARY KEY (`user_id_user`, `role_id_role`),
-  INDEX `fk_user_has_role_role1_idx` (`role_id_role` ASC) VISIBLE,
-  INDEX `fk_user_has_role_user_idx` (`user_id_user` ASC) VISIBLE,
-  CONSTRAINT `fk_user_has_role_user`
-    FOREIGN KEY (`user_id_user`)
-    REFERENCES `mydb`.`user` (`id_user`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_has_role_role1`
-    FOREIGN KEY (`role_id_role`)
-    REFERENCES `mydb`.`role` (`id_role`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE make_appointment(
+   id_users INT,
+   id_status INT,
+   id_rdv INT,
+   PRIMARY KEY(id_users, id_status, id_rdv),
+   FOREIGN KEY(id_users) REFERENCES users(id_users),
+   FOREIGN KEY(id_status, id_rdv) REFERENCES appointment(id_status, id_rdv)
+);
 
+CREATE TABLE have_appointment(
+   id_users INT,
+   id_status INT,
+   id_rdv INT,
+   PRIMARY KEY(id_users, id_status, id_rdv),
+   FOREIGN KEY(id_users) REFERENCES users(id_users),
+   FOREIGN KEY(id_status, id_rdv) REFERENCES appointment(id_status, id_rdv)
+);
 
--- -----------------------------------------------------
--- Table `mydb`.`rdv`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db-projet`.`rdv` (
-  `id_rdv` INT NOT NULL,
-  `date_rdv` DATETIME NULL,
-  `user_id_user` INT NOT NULL,
-  `user_has_role_doc_id_user` INT NOT NULL COMMENT 'doit être un médécin',
-  `status` VARCHAR(45) NULL,
-  PRIMARY KEY (`id_rdv`, `user_id_user`, `user_has_role_doc_id_user`),
-  INDEX `fk_rdv_user1_idx` (`user_id_user` ASC) VISIBLE,
-  INDEX `fk_rdv_user2_idx` (`user_has_role_doc_id_user` ASC) VISIBLE,
-  CONSTRAINT `fk_rdv_user1`
-    FOREIGN KEY (`user_id_user`)
-    REFERENCES `mydb`.`user` (`id_user`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_rdv_user2`
-    FOREIGN KEY (`user_has_role_doc_id_user`)
-    REFERENCES `mydb`.`user` (`id_user`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

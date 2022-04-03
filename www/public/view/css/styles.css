@@ -3,6 +3,11 @@ body{
     font-family: Georgia, "DejaVu Serif", Norasi, serif;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
 /* HEADER */
 
 header{
@@ -11,6 +16,10 @@ header{
     margin:0;
     min-height: 60px;
     background-color: #2b5ab1;
+}
+
+header a {
+    color:#ffffff7a;
 }
 
 .label {
@@ -23,7 +32,7 @@ header{
 .nav-bar-toggler {
     margin:10px 20px;
     padding:5px 5px 2px 5px;
-    background-color: #ffffff00;
+    background-color: transparent;
     border:none;
     color:#ffffff7a;
 }
