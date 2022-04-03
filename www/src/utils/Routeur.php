@@ -3,11 +3,11 @@ namespace App\utils;
 
 use AltoRouter;
 
-class Routeur {
-    public AltoRouter $altoRouteur;
+class Routeur extends AltoRouter{
+    
 
     public function __construct()
     {
-        $this->altoRouteur = new AltoRouter();
+        
     }
 }
