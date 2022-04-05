@@ -15,9 +15,6 @@ $val = function ($str):bool {
     }
     return $rtr;
 };
-
-
-
 $form->addField('input1',Tag::Input,'text','tzzt',array("class"=>"input"),array(new Validator($val,"taille inferieur à 5")));
 $form->addField('input2',Tag::Input,'text','tzzest2',array("class"=>"input"),array(new Validator($val,"taille inferieur à 5")));
 $form->show();
