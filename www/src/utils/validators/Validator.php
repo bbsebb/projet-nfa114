@@ -1,8 +1,8 @@
 <?php
 
-namespace App\utils;
+namespace App\utils\validators;
 
-require '../vendor/autoload.php';
+
 
 class Validator implements ValidatorI{
 
@@ -10,7 +10,11 @@ class Validator implements ValidatorI{
     private string $fieldToValidate;
     private string $messageError;
 
-    function __construct(callable $condition,$messageError) {
+    /**
+     * @param callable $condition a function who return true if the condition checked otherwise return false
+     * @param string $messageError is the error message returned id the condition is not valid.
+     */
+    function __construct(callable $condition,string $messageError = "Une erreur sur ce champs") {
         $this->condition = $condition;
         $this->messageError = $messageError;
     }

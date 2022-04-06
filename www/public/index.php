@@ -13,14 +13,14 @@ $router->map('GET','/', 'home','home');
 $router->map('GET','/signin', 'signin','signin');
 $router->map('GET','/signup', 'signup','signup');
 $router->map('GET','/signout', 'signout','signout');
-$router->map('GET','/office', 'office','office');
+$router->map('GET|POST','/office', 'office','office');
 $router->map('GET','/myappointment', 'myappointment','myappointment');
 $router->map('GET','/profile', 'profile','profile');
 $router->map('GET','/docagenda', 'docagenda','docagenda');
 $router->map('GET','/admin', 'admin','admin');
 $router->map('GET','/agenda', 'agenda','agenda');
 $match = $router->match();
-
+dump($match);
 if(is_array($match) && !empty($match)) {
     if(is_callable($match['target'])) {
         call_user_func_array($match['target'],$match['params']);

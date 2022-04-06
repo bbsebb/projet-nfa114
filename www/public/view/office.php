@@ -1,21 +1,29 @@
 <h1>office</h1>
 <?php
 
+use App\utils\forms\Form;
+use App\utils\validators\ValidatorFactory;
+
 require '../vendor/autoload.php';
 
-use App\utils\Form;
-use App\utils\Tag;
-use App\utils\Validator;
+
 
 $form = new Form();
 $val = function ($str):bool {
-    $rtr = true;
-    if(strlen($str)<5) {
-        $rtr =false;
+    $rtr = false;
+    if(strlen($str)>5) {
+        $rtr =true;
     }
     return $rtr;
 };
-$form->addField('input1',Tag::Input,'text','tzzt',array("class"=>"input"),array(new Validator($val,"taille inferieur à 5")));
-$form->addField('input2',Tag::Input,'text','tzzest2',array("class"=>"input"),array(new Validator($val,"taille inferieur à 5")));
+$form   ->addInputText('login','Login')
+        ->addInputPassword('password','Mot de passe',"",[],[ValidatorFactory::sizeStr(0,5)])
+        ->addInputEmail('email','Email')
+        ->addInputSubmit('sub','Envoyer');
+        
+if(!empty($_POST)) {
+    $form->fillOut($_POST);
+}
 $form->show();
+
 ?>
