@@ -10,7 +10,7 @@ class ValidatorFactory
     {
         $closure = function ($str) use($min,$max): bool {
             $rtr = false;
-            if (strlen($str) > $min && strlen($str) < $max) {
+            if (strlen($str) >= $min && strlen($str) <= $max) {
                 $rtr = true;
             };
             return $rtr;

@@ -106,22 +106,22 @@ form {
     margin-top: 5px;
 }
 
-.form-field-group input {
+input {
     border-radius: 5px;
     border: 1px solid #cecece;
     height: 2em;
 }
 
-.form-field-group input[type=submit] {
+input[type=submit] {
     color:#ffffff;
     background-color:#2b5ab1;
     border: 0px;
-    margin:10px auto 10px;  
+    margin:10px 155px 10px;  
     padding: 10px 20px;
     height:auto;
 }
 
-.form-field-group input[type=submit]:hover {
+input[type=submit]:hover {
     background-color:#184cad;
     cursor: pointer;
 }
