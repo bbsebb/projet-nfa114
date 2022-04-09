@@ -2,8 +2,10 @@
 
 namespace App\utils\forms\components;
 use App\utils\forms\visitors\AbstractVisiteur;
-use Exception;
 
+/**
+ * This class is a div with a label, a input and a span with the error message
+ */
 class Field extends Form{
 
     static private string $tag = "div";
@@ -15,7 +17,13 @@ class Field extends Form{
     private SpanError $spanError; 
     
 
-    public function __construct(Label $label,Input $input,SpanError $spanError,$attributes = ["class"=>"form-field-group"])
+    /**
+     * @param Label $label is the label contained in this class
+     * @param Input $input is the input contained in this class
+     * @param SpanError $spanError is the span with the error message contained in this class
+     * @param array $attributes is the field tag attributes 
+     */
+    public function __construct(Label $label,Input $input,SpanError $spanError,array $attributes = ["class"=>"form-field-group"])
     {
 
         $this->attributes = $attributes;
@@ -31,7 +39,7 @@ class Field extends Form{
     /**
      * Get the value of label
      */ 
-    public function getLabel()
+    public function getLabel():Label
     {
         return $this->label;
     }
@@ -41,7 +49,7 @@ class Field extends Form{
      *
      * @return  self
      */ 
-    public function setLabel($label)
+    public function setLabel($label):self
     {
         $this->label = $label;
 
@@ -51,7 +59,7 @@ class Field extends Form{
     /**
      * Get the value of input
      */ 
-    public function getInput()
+    public function getInput(): Input
     {
         return $this->input;
     }
@@ -61,7 +69,7 @@ class Field extends Form{
      *
      * @return  self
      */ 
-    public function setInput($input)
+    public function setInput($input): self
     {
         $this->input = $input;
 
@@ -71,7 +79,7 @@ class Field extends Form{
     /**
      * Get the value of spanError
      */ 
-    public function getSpanError()
+    public function getSpanError(): SpanError
     {
         return $this->spanError;
     }
@@ -81,7 +89,7 @@ class Field extends Form{
      *
      * @return  self
      */ 
-    public function setSpanError($spanError)
+    public function setSpanError($spanError):self
     {
         $this->spanError = $spanError;
 
@@ -99,7 +107,7 @@ class Field extends Form{
     /**
      * Get the value of attributes
      */ 
-    public function getAttributes()
+    public function getAttributes():array
     {
         return $this->attributes;
     }

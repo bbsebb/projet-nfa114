@@ -11,6 +11,10 @@ class Submit extends Field
     private array $attributes;
     private string $value;
 
+    /**
+     * @param string $value is the label value; default envoyer
+     * @param array $attributes is the field tag attributes 
+     */
     public function __construct($value= "Envoyer",$attributes = [])
     {
         $this->attributes = $attributes;
@@ -20,7 +24,7 @@ class Submit extends Field
     /**
      * Get the value of attributes
      */
-    public function getAttributes()
+    public function getAttributes():array
     {
         return $this->attributes;
     }
@@ -39,7 +43,7 @@ class Submit extends Field
     /**
      * Get the value of value
      */ 
-    public function getValue()
+    public function getValue():string
     {
         return $this->value;
     }

@@ -2,8 +2,10 @@
 
 namespace App\utils\forms\components;
 use App\utils\forms\visitors\AbstractVisiteur;
-use Exception;
 
+/**
+ * This class is a input with a validations array to check the value.
+ */
 class Input extends Field
 {
 
@@ -16,6 +18,13 @@ class Input extends Field
     private string $type;
 
 
+    /**
+     * @param string $name is the input name.
+     * @param string $value is the input value
+     * @param string $type is the input type
+     * @param array $validations is a array of ValidatorI.
+     * @param array $attributes is the field tag attributes 
+     */
     public function __construct(string $name,string $value,string $type, array $validations, $attributes = [])
     {
         $this->attributes = $attributes;
@@ -29,17 +38,17 @@ class Input extends Field
     /**
      * Get the value of value
      */
-    public function getValue()
+    public function getValue():string
     {
         return $this->value;
     }
 
     /**
-     * Set the value of value
+     * Set the value of value and switch the var fillOut on true
      *
      * @return  self
      */
-    public function setValue($value)
+    public function setValue($value):self
     {
         $this->fillOut = true;
         $this->value = $value;
@@ -47,9 +56,17 @@ class Input extends Field
     }
 
     /**
+     * clear the value and witch the var fillOut on false
+     */
+    public function clear():void {
+        $this->fillOut = false;
+        $this->value = "";
+    }
+
+    /**
      * Get the value of attributes
      */
-    public function getAttributes()
+    public function getAttributes():array
     {
         return $this->attributes;
     }
@@ -74,7 +91,7 @@ class Input extends Field
     /**
      * Get the value of validations
      */
-    public function getValidations()
+    public function getValidations():array
     {
         return $this->validations;
     }
@@ -84,7 +101,7 @@ class Input extends Field
      *
      * @return  self
      */
-    public function setValidations($validations)
+    public function setValidations($validations):self
     {
         $this->validations = $validations;
 
@@ -101,7 +118,7 @@ class Input extends Field
      *
      * @return  self
      */
-    public function addValidations($validation)
+    public function addValidations($validation):self
     {
         $this->validations[] = $validation;
         if ($this->isFillOut()) {
@@ -111,7 +128,7 @@ class Input extends Field
     }
 
     /**
-     * Get the value of isFillOut
+     * @return bool true if the input is fillout.
      */ 
     public function isFillOut():bool
     {
@@ -121,7 +138,7 @@ class Input extends Field
     /**
      * Get the value of type
      */ 
-    public function getType()
+    public function getType():string
     {
         return $this->type;
     }
@@ -131,7 +148,7 @@ class Input extends Field
         /**
      * Get the value of name
      */ 
-    public function getName()
+    public function getName():string
     {
         return $this->name;
     }

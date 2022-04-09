@@ -2,8 +2,10 @@
 
 namespace App\utils\forms\components;
 use App\utils\forms\visitors\AbstractVisiteur;
-use Exception;
 
+/**
+ * This class is a label 
+ */
 class Label extends Field
 {
 
@@ -11,39 +13,43 @@ class Label extends Field
 
 
     private array $attributes;
-    private string $value;
-
-    public function __construct(string $value, $attributes = [])
-    {
-        $this->value = $value;
-        $this->attributes = $attributes;
-        $this->value = $value;
-    }
+    private string $text;
 
     /**
-     * Get the value of value
+     * @param string $text is the label text
+     * @param array $attributes is the field tag attributes 
      */
-    public function getValue()
+    public function __construct(string $text, $attributes = [])
     {
-        return $this->value;
+        $this->text = $text;
+        $this->attributes = $attributes;
+        $this->text = $text;
     }
 
     /**
-     * Set the value of value
+     * Get the text of text
+     */
+    public function gettext():string
+    {
+        return $this->text;
+    }
+
+    /**
+     * Set the text of text
      *
      * @return  self
      */
-    public function setValue($value)
+    public function settext($text):self
     {
-        $this->value = $value;
+        $this->text = $text;
 
         return $this;
     }
 
     /**
-     * Get the value of attributes
+     * Get the text of attributes
      */
-    public function getAttributes()
+    public function getAttributes():array
     {
         return $this->attributes;
     }

@@ -4,6 +4,10 @@ namespace App\utils\forms\components;
 use App\utils\forms\visitors\AbstractVisiteur;
 use Exception;
 
+
+/**
+ * This class is a span with message error
+ */
 class SpanError extends Field
 {
 
@@ -13,6 +17,9 @@ class SpanError extends Field
     private array $attributes;
 
 
+    /**
+     * @param array $attributes is the field tag attributes 
+     */
     public function __construct($attributes = [])
     {
 
@@ -22,7 +29,7 @@ class SpanError extends Field
     /**
      * Get the value of attributes
      */
-    public function getAttributes()
+    public function getAttributes():array
     {
         return $this->attributes;
     }
@@ -42,7 +49,7 @@ class SpanError extends Field
     /**
      * Get the value of messageError
      */
-    public function getMessageError()
+    public function getMessageError():array
     {
         return $this->messageError;
     }
