@@ -1,7 +1,13 @@
 <?php
 
-namespace App\utils\forms2;
+namespace App\utils\forms\visitors;
 
+use App\utils\forms\components\Field;
+use App\utils\forms\components\Form;
+use App\utils\forms\components\Input;
+use App\utils\forms\components\Label;
+use App\utils\forms\components\SpanError;
+use App\utils\forms\components\Submit;
 class VisiteurIsValid extends AbstractVisiteur
 {
 

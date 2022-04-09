@@ -1,7 +1,7 @@
 <?php
 
-namespace App\utils\forms2;
-
+namespace App\utils\forms\components;
+use App\utils\forms\visitors\AbstractVisiteur;
 use Exception;
 
 class SpanError extends Field

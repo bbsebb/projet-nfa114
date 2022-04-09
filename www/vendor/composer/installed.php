@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'b0ad30d317532abaa311d1eeabed69a4d2d60247',
+        'reference' => '48d8da289f60e39abe7c8af8127628a6cd1ed2b0',
         'name' => 'bbsebb/projet-nfa114',
         'dev' => true,
     ),
@@ -25,7 +25,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'b0ad30d317532abaa311d1eeabed69a4d2d60247',
+            'reference' => '48d8da289f60e39abe7c8af8127628a6cd1ed2b0',
             'dev_requirement' => false,
         ),
         'symfony/polyfill-mbstring' => array(

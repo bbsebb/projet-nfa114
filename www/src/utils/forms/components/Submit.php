@@ -1,6 +1,8 @@
 <?php
 
-namespace App\utils\forms2;
+namespace App\utils\forms\components;
+
+use App\utils\forms\visitors\AbstractVisiteur;
 
 class Submit extends Field
 {

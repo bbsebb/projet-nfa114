@@ -1,39 +1,43 @@
 <?php
 
-namespace App\utils\forms2;
-
+namespace App\utils\forms\components;
+use App\utils\forms\visitors\AbstractVisiteur;
 use Exception;
 
-class Form extends AbstractForm{
+class Form extends AbstractForm
+{
 
     static private string $tag = "form";
     private array $attributes;
-    private array $childs;  
-    
+    private array $childs;
 
-    public function __construct(array $forms = [],$attributes = [])
-    { 
+
+    public function __construct(array $forms = [], $attributes = [])
+    {
         $this->attributes = $attributes;
         $this->childs = $forms;
     }
 
-    public function  accept(AbstractVisiteur $visiteur):mixed {
+    public function  accept(AbstractVisiteur $visiteur): mixed
+    {
         return $visiteur->visiteForm($this);
     }
 
 
-    public function addChild(AbstractForm $form):self {
+    public function addChild(AbstractForm $form): self
+    {
         $this->childs[] = $form;
         return $this;
     }
 
-    public function getChilds():array {
+    public function getChilds(): array
+    {
         return $this->childs;
     }
 
     /**
      * Get the value of attributes
-     */ 
+     */
     public function getAttributes()
     {
         return $this->attributes;
@@ -44,7 +48,7 @@ class Form extends AbstractForm{
      *
      * @return  self
      */
-    public function addAttributes($attribute,$value):self
+    public function addAttributes($attribute, $value): self
     {
         $this->attributes[$attribute] = $value;
 

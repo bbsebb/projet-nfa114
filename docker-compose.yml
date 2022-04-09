@@ -20,6 +20,7 @@ services:
       MYSQL_PASSWORD: ga9399ghr
     volumes:
       - ./mysql/init:/docker-entrypoint-initdb.d
+    
 
   adminer:
     image: adminer
