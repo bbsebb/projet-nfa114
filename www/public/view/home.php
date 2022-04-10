@@ -3,19 +3,18 @@
 <?php
 
 use App\models\Auth;
+use App\repository\UserRepository;
+use App\services\UserService;
 
 require '../vendor/autoload.php';
 
-dump($_SESSION);
 try {
-    $dbh = new PDO('mysql:host=172.20.0.4:3306;dbname=db-projet', "user", "ga9399ghr",array(
-        PDO::ATTR_PERSISTENT => true
-    ));
 
-    
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
+$service = new UserService();
+dump($service->getAuth("sebastien.burckhardt@gmail.com","1234"));
+dump($_SERVER);
+} catch(Exception $e) {
+    print $e->getMessage();
 }
-
 
 ?>

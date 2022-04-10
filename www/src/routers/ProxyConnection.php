@@ -2,6 +2,7 @@
 
 namespace App\routers;
 
+use App\configs\ConfigI;
 use App\configs\ConfigRoutePermissions;
 use App\models\Auth;
 
@@ -12,11 +13,15 @@ class ProxyConnection implements RouterI
     private array $permission;
     private string $urlErreur = "/error/proxy";
 
-    public function __construct(RouterI $router = new Router(), array $permission = [])
+    /**
+     * Create a router with a connexion management 
+     * @param RouterI $router is the concret router
+     * @param ConfigI $permissionConfig is the concret configuration for the url permission
+     */
+    public function __construct(RouterI $router = new Router(), ConfigI $permissionConfig = new ConfigRoutePermissions())
     {
-        $this->router  = $router;
-        $permission = (new ConfigRoutePermissions())->get();
-        $this->permission = $permission;
+        $this->router  = $router; 
+        $this->permission = $permissionConfig->get();
     }
 
     public function generate($route): string
@@ -28,13 +33,14 @@ class ProxyConnection implements RouterI
     {
         session_start();
         $auth = $_SESSION['auth'] ?? null;
+        $uri = strtok($_SERVER["REQUEST_URI"], '?');
         //Si la page demande une authentification et que le client n'est pas authentifié
-        if ($this->match($_SERVER['REQUEST_URI'])['auth'] && !$this->isAuth($auth)) {
-            header("location: {$this->urlErreur}");
+        if ($this->match($uri)['auth'] && !$this->isAuth($auth)) {
+            header("location: /signin{$_SERVER['REQUEST_URI']}");
             die();
         }
         //Si la page demande une autorisation et que le client n'a pas les bon roles.
-        if (!$this->hasRole($this->match($_SERVER['REQUEST_URI'])['roles'], $auth)) {
+        if (!$this->hasRole($this->match($uri)['roles'], $auth)) {
             header("location: {$this->urlErreur}");
             die();
         }
@@ -49,12 +55,12 @@ class ProxyConnection implements RouterI
 
     private function hasRole(array $roles, Auth|null $auth): bool
     {
-        $flag = (count($roles)==0)?true: false;
-        if ($auth !== null) {
+        $flag = true;
+        if ($auth !== null && count($roles)>0) {
            // dump($roles);
            // dump($auth->getRole());
             //dump(array_intersect($roles, $auth->getRole()));
-            $flag = count(array_intersect($roles, $auth->getRole())) > 0;
+            $flag = count(array_intersect($roles, $auth->getRoles())) > 0;
         }
         return $flag;
     }

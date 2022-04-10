@@ -8,6 +8,9 @@ use App\utils\forms\components\Input;
 use App\utils\forms\components\Label;
 use App\utils\forms\components\SpanError;
 use App\utils\forms\components\Submit;
+/**
+ * This class is a implementation of a algorithm who checks if all the input are valid
+ */
 class VisiteurIsValid extends AbstractVisiteur
 {
 

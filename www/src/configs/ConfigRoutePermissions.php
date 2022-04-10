@@ -7,9 +7,10 @@ class ConfigRoutePermissions implements ConfigI {
     public function __construct()
     {
         $this->config = array(
-            "/office"=> array("auth"=>true,"roles"=>["ADMIN","USER"]),
+            "/office"=> array("auth"=>true,"roles"=>[]),
         );
     }
+    
     public function add(mixed $args):self 
     {
         return $this;

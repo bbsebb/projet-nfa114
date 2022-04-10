@@ -5,15 +5,15 @@ class Auth {
 
     private string $name;
     private string $forname;
-    private array $role;
+    private array $roles;
     private string $email;
 
-    public function __construct(string $name,string $forname,array $role,string $email)
+    public function __construct(string $name,string $forname,string $email,array $roles)
     {
-        $this->$name = $name;
-        $this->$forname = $forname;
-        $this->$email = $email;
-        $this->$role = $role;
+        $this->name = $name;
+        $this->forname = $forname;
+        $this->email = $email;
+        $this->roles = $roles;
     }
 
     /**
@@ -59,9 +59,9 @@ class Auth {
     /**
      * Get the value of role
      */ 
-    public function getRole()
+    public function getRoles()
     {
-        return $this->role;
+        return $this->roles;
     }
 
     /**
@@ -69,9 +69,29 @@ class Auth {
      *
      * @return  self
      */ 
-    public function setRole($role)
+    public function setRoles($roles)
     {
-        $this->role = $role;
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of email
+     */ 
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @return  self
+     */ 
+    public function setEmail($email)
+    {
+        $this->email = $email;
 
         return $this;
     }

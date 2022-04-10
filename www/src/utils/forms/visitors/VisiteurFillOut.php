@@ -8,9 +8,16 @@ use App\utils\forms\components\Input;
 use App\utils\forms\components\Label;
 use App\utils\forms\components\SpanError;
 use App\utils\forms\components\Submit;
+
+/**
+ * This class is a implementation of a algorithm who fill out a form object with a array "name"=>"value"
+ */
 class VisiteurFillOut extends AbstractVisiteur
 {
     private array $args;
+    /**
+     * @param array $args is a array with string keys "name" who are the input name of form and with string values who are the input value
+     */
     public function __construct(array $args)
     {
         $this->args = $args;

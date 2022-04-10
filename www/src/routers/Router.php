@@ -9,14 +9,27 @@ use App\configs\ConfigRouteToController;
 
 class Router implements RouterI
 {
-
     private AltoRouter $altoRouter;
 
+    /**
+     * Create router in one call from config.
+     *
+     * @param array $routes
+     * @throws Exception
+     */
     public function __construct(array $routes = [])
     {
         $this->altoRouter = new AltoRouter();
         $routes = (new ConfigRouteToController())->get();
+        $this->addRoutes($routes);
+    }
+
+    public function addRoutes(array $routes) {
         $this->altoRouter->addRoutes($routes);
+    }
+
+    public function match($requestUrl = null, $requestMethod = null):array|bool {
+        return $this->altoRouter->match($requestUrl, $requestMethod);
     }
 
     public function generate($route): string
@@ -36,11 +49,13 @@ class Router implements RouterI
             if (is_callable(array($controller, $action))) {
                 $pageContent = call_user_func_array(array($controller, $action), array($match['params']));
             } else {
-                echo '405';
+                header( $_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
+                die();
             }
             require_once DIR_TEMPLATE . "/layout.php";
         } else {
-            echo '404';
+            header( $_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
+            die();
         }
     }
 }

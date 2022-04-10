@@ -8,7 +8,8 @@ class ConfigRouteToController implements ConfigI {
     {
         $this->config = array(
         array('GET|POST', '/', 'HomeController#test', 'home'),
-        array('GET', '/signin', 'signin', 'signin'),
+        array('GET', '/signin/[a:url]', 'SignInController#signInGet', 'signin'),
+        array('POST', '/signin/[a:url]', 'SignInController#signInPost'),
         array('GET', '/signup', 'signup', 'signup'),
         array('GET', '/signout', 'signout', 'signout'),
         array('GET|POST', '/office', 'OfficeController#test', 'office'),
@@ -22,6 +23,7 @@ class ConfigRouteToController implements ConfigI {
     }
     public function add(mixed $args):self 
     {
+        $this->config[] = $args;
         return $this;
     }
     public function get():array {

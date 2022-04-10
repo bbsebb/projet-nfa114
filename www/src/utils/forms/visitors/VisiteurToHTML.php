@@ -9,6 +9,9 @@ use App\utils\forms\components\Label;
 use App\utils\forms\components\SpanError;
 use App\utils\forms\components\Submit;
 
+/**
+ * This class is a implementation of a algorithm who return the html representation of a form
+ */
 class VisiteurToHTML extends AbstractVisiteur
 {
 
@@ -35,7 +38,7 @@ class VisiteurToHTML extends AbstractVisiteur
     }
     public function visiteLabel(Label $label): string
     {
-        return "<label>{$label->getValue()}</label>";
+        return "<label>{$label->getText()}</label>";
     }
     public function visiteInput(Input $input): string
     {
