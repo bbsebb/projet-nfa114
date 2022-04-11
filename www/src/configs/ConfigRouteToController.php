@@ -8,9 +8,10 @@ class ConfigRouteToController implements ConfigI {
     {
         $this->config = array(
         array('GET|POST', '/', 'HomeController#test', 'home'),
-        array('GET', '/signin/[a:url]', 'SignInController#signInGet', 'signin'),
-        array('POST', '/signin/[a:url]', 'SignInController#signInPost'),
-        array('GET', '/signup', 'signup', 'signup'),
+        array('GET', '/signin/[a:url]?', 'SignInController#signInGet', 'signin'),
+        array('POST', '/signin/[a:url]?', 'SignInController#signInPost'),
+        array('GET', '/signup', 'SignUpController#signUpGet', 'signup'),
+        array('POST', '/signup', 'SignInController#signUpPost'),
         array('GET', '/signout', 'signout', 'signout'),
         array('GET|POST', '/office', 'OfficeController#test', 'office'),
         array('GET', '/myappointment', 'myappointment', 'myappointment'),

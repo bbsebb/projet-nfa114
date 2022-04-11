@@ -9,7 +9,7 @@ use App\utils\forms\components\Label;
 use App\utils\forms\components\SpanError;
 use App\utils\forms\components\Submit;
 
-class ConnexionForm {
+class SignInForm extends AbstractFormBuilder{
     public static function get(string $action = ""):AbstractForm {
         $emailFiel = new Field(
             new Label("Email"),

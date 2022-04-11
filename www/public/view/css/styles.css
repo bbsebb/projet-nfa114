@@ -4,10 +4,12 @@ body{
 }
 
 a {
-    text-decoration: none;
-    color: black;
+    
 }
 
+#container {
+    margin: 0px 10px;
+}
 /* HEADER */
 
 header{
@@ -20,6 +22,7 @@ header{
 
 header a {
     color:#ffffff7a;
+    text-decoration: none;
 }
 
 .label {
@@ -133,4 +136,17 @@ input[type=submit]:hover {
 .form-field-group .error {
     color: red;
     font-size: 0.8em;
+}
+.alert-error {
+    background-color: #ff000077;
+    border-radius: 10px;
+    border:1px solid red;
+    padding: 10px;
+    text-align: center;
+    margin:10px;
+}
+
+.legend {
+    margin: 5px auto 5px;
+    text-align: center;
 }

@@ -7,10 +7,10 @@ require_once "../vendor/autoload.php";
 
 define("DIR_VIEW","view/");
 define("DIR_TEMPLATE",DIR_VIEW."template");
+global $_router;
 
-
-$router = new ProxyConnection();
-$router->run();
+$_router = new ProxyConnection();
+$_router->run();
 
 
 
