@@ -1,6 +1,5 @@
-<?php
-
-use App\utils\forms\visitors\VisiteurToHTML;
-?>
+<div id="container-page" >
 <h1><?= $this->bind['title']?></h1>
-<?= $this->bind['form']->accept(new  VisiteurToHTML()) ?>
+<?= $this->bind['errorMessage']??"" ?>
+<?= $this->bind['form'] ?>
+</div>

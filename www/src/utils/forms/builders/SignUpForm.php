@@ -8,6 +8,7 @@ use App\utils\forms\components\Input;
 use App\utils\forms\components\Label;
 use App\utils\forms\components\SpanError;
 use App\utils\forms\components\Submit;
+use App\utils\validators\ValidatorFactory;
 
 class SignUpForm extends AbstractFormBuilder{
     public static function get(string $action = ""):AbstractForm {
@@ -28,12 +29,12 @@ class SignUpForm extends AbstractFormBuilder{
         );
         $emailFiel = new Field(
             new Label("Email"),
-            new Input("email","","email",[]),
+            new Input("email","","email",[ValidatorFactory::sameEmail()]),
             new SpanError()
         );
         $passwordFiel = new Field(
             new Label("Votre mot de passe"),
-            new Input("password","","password",[]),
+            new Input("password","","password",[ValidatorFactory::sizeStr(3)]),
             new SpanError()
         );
         $passwordFiel2 = new Field(

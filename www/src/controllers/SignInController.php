@@ -5,6 +5,9 @@ namespace App\controllers;
 use App\services\UserService;
 use App\utils\forms\visitors\VisiteurFillOut;
 use App\utils\forms\visitors\VisiteurIsValid;
+use App\utils\forms\visitors\VisiteurToHTML;
+use Exception;
+use PDOException;
 
 class SignInController extends AbstractController
 {
@@ -26,7 +29,7 @@ class SignInController extends AbstractController
     {
 
         $action = "{$_SERVER['REQUEST_URI']}";
-        $this->bind["form"] = call_user_func(self::$formBuilder,$action);
+        $this->bind["form"] = call_user_func(self::$formBuilder,$action)->accept(new  VisiteurToHTML());
         ob_start();
         require_once DIR_VIEW .  self::$pageName;
         return ob_get_clean();
@@ -37,10 +40,12 @@ class SignInController extends AbstractController
      */
     public function signInPost(array $args)
     {
-        $userService = new UserService();
         $action = "{$_SERVER['REQUEST_URI']}";
         $form = call_user_func(self::$formBuilder,$action);
         $form->accept(new VisiteurFillOut($_POST));
+        $this->bind['errorMessage'] = '';
+        try {
+        $userService = new UserService();
         if ($form->accept(new VisiteurIsValid())) {
             $auth = $userService->getAuth($_POST["email"], $_POST["password"]);
             if ($auth !== null) {
@@ -50,10 +55,16 @@ class SignInController extends AbstractController
                 header("Location: http://$host/$redirection");
                 die();
             } else {
-                $this->bind['errorMessage'] = '<div class="alert-error">Mauvais login ou mot de passe</div>';
+                $errorMessage = 'Mauvais login ou mot de passe';
             }
         }
-        $this->bind["form"] = $form;
+        } catch(PDOException $e) {
+            $errorMessage = "Erreur de connexion à la base donnée";
+        } catch(Exception $e) {
+            $errorMessage = "Erreur inconnue";
+        }
+        $this->bind['errorMessage'] = sprintf('<div class="alert-error">%s</div>',$errorMessage);
+        $this->bind["form"] = $form->accept(new  VisiteurToHTML());
         ob_start();
         require_once DIR_VIEW . self::$pageName;
         return ob_get_clean();

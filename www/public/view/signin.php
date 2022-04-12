@@ -1,11 +1,7 @@
-<?php
-
-use App\utils\forms\visitors\VisiteurToHTML;
-?>
 <h1><?= $this->bind["title"]  ?></h1>
 <div id="container-page" >
 <?= $this->bind['errorMessage']??"" ?>
-<?= $this->bind["form"]->accept(new  VisiteurToHTML())  ?>
+<?= $this->bind["form"]  ?>
 <div class="legend">
     Première fois sur le cabinet : 
     

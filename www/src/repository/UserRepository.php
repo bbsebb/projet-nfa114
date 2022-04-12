@@ -3,19 +3,31 @@
 namespace App\repository;
 
 use App\models\User;
+use Exception;
 use PDO;
+
 
 class UserRepository extends Dao
 {
 
 
 
-    public function create($entitie): User|null
+    public function create($user): bool
     {
-
-        return null;
+        $sql = '
+        INSERT INTO users (name,forname,email,password,tel) VALUES (?,?,?,?,?)
+        ';
+        $date = array(
+            $user->getName(),
+            $user->getForname(),
+            $user->getEmail(),
+            $user->getPassword(),
+            $user->getTel()
+        );
+        $statement = $this->getPdo()->prepare($sql);
+        return $statement->execute($date);
     }
-    public function update($entitie): bool
+    public function update($user): bool
     {
         return true;
     }
@@ -24,7 +36,6 @@ class UserRepository extends Dao
         $sql = 'SELECT * 
         FROM users
         WHERE '.$col.' = ?';
-
         $statement = $this->getPdo()->prepare($sql);
         $statement->execute(array($search));
         $statement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE , "App\models\User");
@@ -38,7 +49,7 @@ class UserRepository extends Dao
     {
         return null;
     }
-    public function delete($entitie): bool
+    public function delete($user): bool
     {
         return true;
     }

@@ -2,6 +2,8 @@
 
 namespace App\utils\validators;
 
+use App\services\UserService;
+use Exception;
 
 /**
  * This class is a collection de ValidatorI
@@ -14,8 +16,9 @@ class ValidatorFactory
      * @param int $max is the max length
      * @return ValidatorI 
      */
-    public static function sizeStr(int $min = 0,int $max = 0): ValidatorI
+    public static function sizeStr(int|null $min = 0,int|null $max = PHP_INT_MAX): ValidatorI
     {
+        
         $closure = function ($str) use($min,$max): bool {
             $rtr = false;
             if (strlen($str) >= $min && strlen($str) <= $max) {
@@ -23,6 +26,38 @@ class ValidatorFactory
             };
             return $rtr;
         };
-        return new Validator($closure, "La taille doit être entre $min et $max");
+        $str = 'La taille doit être';
+        $str .= ($max==PHP_INT_MAX)? " au minimue de $min" : "entre $min et $max";
+        return new Validator($closure, $str);
+    }
+
+    public static function passwordVerify(): ValidatorI
+    {
+        $closure = function ($email): bool {
+            $flag = false;
+            try{
+                $userService = new UserService();
+                $flag = !$userService->userExist($email);
+            } catch (Exception $e) {
+                $flag = false;
+            }
+            return $flag;
+        };
+        return new Validator($closure, "l'utilisateur existe déjà");
+    }
+
+    public static function sameEmail(): ValidatorI
+    {
+        $closure = function ($email): bool {
+            $flag = false;
+            try{
+                $userService = new UserService();
+                $flag = !$userService->userExist($email);
+            } catch (Exception $e) {
+                $flag = false;
+            }
+            return $flag;
+        };
+        return new Validator($closure, "l'utilisateur existe déjà");
     }
 }
