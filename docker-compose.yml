@@ -18,6 +18,8 @@ services:
       MYSQL_DATABASE: db-projet
       MYSQL_USER: user
       MYSQL_PASSWORD: ga9399ghr
+    ports:
+      - '33006:3306'
     volumes:
       - ./mysql/init:/docker-entrypoint-initdb.d
     
