@@ -26,4 +26,16 @@ abstract class Dao implements CRUDInterface
     {
         return $this->pdo;
     }
+
+    /**
+     * Set the value of pdo
+     *
+     * @return  self
+     */ 
+    protected function setPdo($pdo)
+    {
+        $this->pdo = $pdo;
+
+        return $this;
+    }
 }

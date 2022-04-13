@@ -26,15 +26,16 @@ class VisiteurToHTML extends AbstractVisiteur
     }
     public function visiteField(Field $field): string
     {
-        $str = "<div {$this->attributesToHTML($field->getAttributes())}>";
+        $str ="";
+        $str .= "<div {$this->attributesToHTML($field->getAttributes())}>";
         $str .= $field->getLabel()->accept($this);
         $str .= $field->getInput()->accept($this);
         if (!$this->checkValidation($field->getInput()->getValue(), $field->getInput()->getValidations()) && $field->getInput()->IsFillOut()) {
-            $field->getSpanError()->setMessageError($this->getMessageErrors($field->getInput()->getValidations()));
+           $field->getSpanError()->setMessageError($this->getMessageErrors($field->getInput()->getValidations()));
             $str .= $field->getSpanError()->accept($this);
         }
         $str .= '</div>';
-        return $str;
+        return $str; 
     }
     public function visiteLabel(Label $label): string
     {
@@ -46,6 +47,7 @@ class VisiteurToHTML extends AbstractVisiteur
             $input->addAttributes("class","input-error");
         }
         return sprintf('<input type="%s" name="%s" value="%s" %s>',$input->getType(),$input->getName(),$input->getValue(),$this->attributesToHTML($input->getAttributes()));
+
     }
     public function visiteSpanError(SpanError $span): string
     {

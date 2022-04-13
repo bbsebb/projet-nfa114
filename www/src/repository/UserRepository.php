@@ -25,7 +25,8 @@ class UserRepository extends Dao
             $user->getTel()
         );
         $statement = $this->getPdo()->prepare($sql);
-        return $statement->execute($date);
+        $rtr = $statement->execute($date);
+        return $rtr;
     }
     public function update($user): bool
     {
