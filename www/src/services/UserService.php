@@ -5,7 +5,7 @@ namespace App\services;
 use App\models\Auth;
 use App\models\User;
 use App\repository\Dao;
-use App\repository\UserRepository;
+use App\repository\UsersRepository;
 
 class UserService {
 
@@ -13,7 +13,7 @@ class UserService {
 
     public function __construct()
     {
-        $this->userRepository = new UserRepository();
+        $this->userRepository = new UsersRepository();
     }
 
     public function getAuth(string $email, string $password):Auth|null {
@@ -21,7 +21,7 @@ class UserService {
         
         $auth = null;
         if(isset($user) && password_verify($password, $user->getPassword()) ) {
-            $auth = new Auth($user->getName(),$user->getForname(),$user->getEmail(), []);
+            $auth = new Auth($user->getName(),$user->getForname(),$user->getEmail(), $user->getRoles());
         }
         return $auth;
     }

@@ -59,9 +59,9 @@ class SignInController extends AbstractController
             }
         }
         } catch(PDOException $e) {
-            $errorMessage = "Erreur de connexion à la base donnée";
+            $errorMessage = "Erreur de connexion à la base donnée $e";
         } catch(Exception $e) {
-            $errorMessage = "Erreur inconnue";
+            $errorMessage = "Erreur inconnue $e";
         }
         $this->bind['errorMessage'] = sprintf('<div class="alert-error">%s</div>',$errorMessage);
         $this->bind["form"] = $form->accept(new  VisiteurToHTML());

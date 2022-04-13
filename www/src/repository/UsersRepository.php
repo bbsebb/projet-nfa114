@@ -7,7 +7,7 @@ use Exception;
 use PDO;
 
 
-class UserRepository extends Dao
+class UsersRepository extends Dao
 {
 
 
@@ -32,7 +32,7 @@ class UserRepository extends Dao
     {
         return true;
     }
-    public function getBy(string $col,string $search): User|null
+    public function getBy(string $col,string $search): array|User|null
     {
         $sql = 'SELECT * 
         FROM users
@@ -40,13 +40,23 @@ class UserRepository extends Dao
         $statement = $this->getPdo()->prepare($sql);
         $statement->execute(array($search));
         $statement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE , "App\models\User");
+        $rowCount = $statement->rowCount();
+        if($rowCount > 1 ) {
+            $userArray = $statement->fetchAll();
+            $rtr = $userArray ;
+        } else {
         $user = $statement->fetch();
+        $roleRepo = new RolesRepository();
+        $roles = $roleRepo->getBy("id_users",$user->getId_users());
+        $user->setRoles($roles);
+        $rtr=$user;
         if($user === false) {
-            $user = null;
+            $rtr = null;
         }
-        return $user;
     }
-    public function getByAll(): array|null
+        return $rtr;
+    }
+    public function getAll(): array|null
     {
         return null;
     }
