@@ -13,7 +13,7 @@ abstract class Dao implements CRUDInterface
     public function __construct()
     {
 
-        $this->pdo = new PDO('mysql:host=172.20.0.2:3306;dbname=db-projet', "user", "ga9399ghr", array(
+        $this->pdo = new PDO('mysql:host=mysql-nfa114-projet:3306;dbname=db-projet', "user", "ga9399ghr", array(
             PDO::ATTR_PERSISTENT => true
         ));
     }
