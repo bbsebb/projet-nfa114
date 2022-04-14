@@ -42,16 +42,19 @@ class Router implements RouterI
         $match = $this->altoRouter->match();
         $router = $this;
         $pageContent = "";
+        $title = "";
         if (is_array($match) && !empty($match)) {
             list($controller, $action) = explode('#', $match['target']);
             $controller = 'App\controllers\\'.$controller;
             $controller = new $controller();
             if (is_callable(array($controller, $action))) {
                 $pageContent = call_user_func_array(array($controller, $action), array($match['params']));
+                $title = $match['name'];
             } else {
                 header( $_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
                 die();
             }
+            $auth = $_SESSION['auth']??null;
             require_once DIR_TEMPLATE . "/layout.php";
         } else {
             header( $_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');

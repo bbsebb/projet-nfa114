@@ -57,10 +57,7 @@ class ProxyConnection implements RouterI
     {
         $flag = true;
         if ($auth !== null && count($roles)>0) {
-           // dump($roles);
-           // dump($auth->getRole());
-            //dump(array_intersect($roles, $auth->getRole()));
-            $flag = count(array_intersect($roles, $auth->getRoles())) > 0;
+            $flag = count(array_intersect($roles, $auth->rolesToArray())) > 0;
         }
         return $flag;
     }
