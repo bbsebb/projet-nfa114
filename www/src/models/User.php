@@ -5,13 +5,13 @@ namespace App\models;
 class User
 {
     const TABLE_NAME = 'users';
-    private int|null $id_users;
-    private string|null $password;
-    private string|null $name;
-    private string|null $forname;
-    private string|null $email;
-    private string|null $tel;
-    private array $roles;
+    protected int|null $id_users;
+    protected string|null $password;
+    protected string|null $name;
+    protected string|null $forname;
+    protected string|null $email;
+    protected string|null $tel;
+    protected array $roles;
 
     public function __construct(int|null $id_users = null, string|null $password = null, string|null $name = null, string|null $forname = null, string|null $email = null, string|null $tel = null, array $roles = [])
     {

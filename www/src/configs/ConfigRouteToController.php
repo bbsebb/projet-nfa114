@@ -7,17 +7,17 @@ class ConfigRouteToController implements ConfigI {
     public function __construct()
     {
         $this->config = array(
-        array('GET|POST', '/', 'HomeController#test', 'home'),
+        array('GET|POST', '/', 'HomeController#home', 'home'),
         array('GET', '/signin/[a:url]?', 'SignInController#signInGet', 'signin'),
         array('POST', '/signin/[a:url]?', 'SignInController#signInPost'),
         array('GET', '/signup', 'SignUpController#signUpGet', 'signup'),
         array('POST', '/signup', 'SignUpController#signUpPost'),
         array('GET', '/signout', 'SignOutController#signOut', 'signout'),
-        array('GET|POST', '/office', 'OfficeController#test', 'office'),
+        array('GET|POST', '/office', 'OfficeController#office', 'office'),
         array('GET', '/myappointment', 'myappointment', 'myappointment'),
         array('GET', '/profile', 'profile', 'profile'),
         array('GET', '/docagenda', 'docagenda', 'docagenda'),
-        array('GET', '/admin', 'admin', 'admin'),
+        array('GET', '/admin', 'AdminController#admin', 'admin'),
         array('GET', '/agenda', 'agenda', 'agenda'),
         array('GET', '/test', 'TestController#test', 'php.ini'),
         array('GET', '/error/[a:type]', 'ErrorController#error', 'error'));
