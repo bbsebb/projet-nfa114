@@ -8,6 +8,6 @@ use App\services\UserService;
 
 require '../vendor/autoload.php';
 
-dump($_SESSION);
+
 
 ?>

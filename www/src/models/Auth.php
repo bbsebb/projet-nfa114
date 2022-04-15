@@ -95,4 +95,25 @@ class Auth {
 
         return $this;
     }
+
+    public function rolesToArray(): array
+    {
+        $rtr = [];
+        foreach ($this->roles as $role) {
+            $rtr[] = $role->getName();
+        }
+        return $rtr;
+    }
+
+    public function hasRoles(array $roles):bool {
+        return Auth::isAuthorized($this,$roles);
+    }
+
+    public static function isAuthorized(Auth $auth,array $roles):bool {
+        $flag = true;
+        if ($auth !== null && count($roles)>0) {
+            $flag = count(array_intersect($roles, $auth->rolesToArray())) > 0;
+        }
+        return $flag;
+    }
 }

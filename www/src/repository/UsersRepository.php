@@ -32,28 +32,29 @@ class UsersRepository extends Dao
     {
         return true;
     }
-    public function getBy(string $col,string $search): array|User|null
+    public function getBy(string $col, string $search): array|User|null
     {
         $sql = 'SELECT * 
         FROM users
-        WHERE '.$col.' = ?';
+        WHERE ' . $col . ' = ?';
         $statement = $this->getPdo()->prepare($sql);
         $statement->execute(array($search));
-        $statement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE , "App\models\User");
+        $statement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "App\models\User");
         $rowCount = $statement->rowCount();
-        if($rowCount > 1 ) {
+        if ($rowCount > 1) {
             $userArray = $statement->fetchAll();
-            $rtr = $userArray ;
+            $rtr = $userArray;
         } else {
-        $user = $statement->fetch();
-        $roleRepo = new RolesRepository();
-        $roles = $roleRepo->getBy("id_users",$user->getId_users());
-        $user->setRoles($roles);
-        $rtr=$user;
-        if($user === false) {
-            $rtr = null;
+            $user = $statement->fetch();
+            $roleRepo = new RolesRepository();
+            if ($user === false) {
+                $rtr = null;
+            } else {
+                $roles = $roleRepo->getBy("id_users", $user->getId_users());
+                $user->setRoles($roles);
+                $rtr = $user;
+            }
         }
-    }
         return $rtr;
     }
     public function getAll(): array|null
