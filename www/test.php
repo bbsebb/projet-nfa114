@@ -6,12 +6,15 @@ $pdo = new PDO('mysql:host=mysql-nfa114-projet;dbname=db-projet', "user", "ga939
     print_r($e);
 }
 
-$sql = 'SELECT * 
-        FROM users';
-        echo 1;
-        $statement = $pdo->prepare($sql);
-        echo 2;
-        $statement->execute();
-        echo 3;
-        $user = $statement->fetch();
-        var_dump($user);
+$tab[0][] = "0.0";
+$tab[0][] = "0.1";
+$tab[0][] = "0.2";
+$tab[0][] = "0.3";
+$tab[1][] = "1.0";
+$tab[1][] = "1.1";
+$tab[1][] = "1.2";
+$tab[1][] = "1.3";
+$tab[2][] = "2.0";
+$tab[2][] = "2.1";
+$tab[2][] = "2.2";
+$tab[2][] = "2.3";
