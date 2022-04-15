@@ -39,12 +39,16 @@ class DoctorRepository extends UsersRepository
         $statement->execute(array($search));
         $statement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "App\models\Doctor");
         $rowCount = $statement->rowCount();
+        $roleRepo = new RolesRepository();
         if ($rowCount > 1) {
             $doctorArray = $statement->fetchAll();
+            foreach ($doctorArray as $doctor) {
+                $roles = $roleRepo->getBy("id_users", $doctor->getId_users());
+                $doctor->setRoles($roles);
+            }
             $rtr = $doctorArray;
         } else {
             $doctor = $statement->fetch();
-            $roleRepo = new RolesRepository();
             if ($doctor === false) {
                 $rtr = null;
             } else {
@@ -60,9 +64,17 @@ class DoctorRepository extends UsersRepository
         $sql = 'SELECT * 
         FROM users
         INNER JOIN doctor USING(id_users)';
-        
-        return null;
+
+        $statement = $this->getPdo()->query($sql, PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "App\models\Doctor");
+        $doctorArray = $statement->fetchAll();
+        $roleRepo = new RolesRepository();
+        foreach ($doctorArray as $doctor) {
+            $roles = $roleRepo->getBy("id_users", $doctor->getId_users());
+            $doctor->setRoles($roles);
+        }
+        return ($doctorArray == false) ? null : $doctorArray;
     }
+
     public function delete($user): bool
     {
         return true;

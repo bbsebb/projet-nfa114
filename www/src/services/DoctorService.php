@@ -17,12 +17,14 @@ class DoctorService {
     }
 
     public function getAllDoctors() {
-
+        return $this->doctorRepository->getAll();
     }
 
     public function getByID(int $id):Doctor|null  {
         return $this->doctorRepository->getBy('id_doctor',$id);
     }
+
+    
 
     public function addDoctor(Doctor $doctor):void{
         

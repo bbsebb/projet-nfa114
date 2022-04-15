@@ -150,3 +150,27 @@ input[type=submit]:hover {
     margin: 5px auto 5px;
     text-align: center;
 }
+
+/* TABLEAU */
+
+table {
+    border: 1px solid #cecece;
+    padding: 10px;
+    border-radius: 5px;
+    margin:auto;
+    border-spacing:0;
+    
+}
+
+table td,th  {
+    border-top: 1px solid #cecece;
+    padding:5px;
+}
+thead th{ 
+    border-top: none;
+}
+tbody :first-child td {
+    border-top: 2px solid #818181;
+}
+
+
