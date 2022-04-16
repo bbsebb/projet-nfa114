@@ -38,11 +38,18 @@ CREATE TABLE status(
    PRIMARY KEY(id_status)
 );
 
+CREATE TABLE doctor(
+   id_doctor INT AUTO_INCREMENT,
+   id_users INT NOT NULL,
+   PRIMARY KEY(id_doctor),
+   FOREIGN KEY(id_users) REFERENCES users(id_users)
+);
+
 CREATE TABLE appointment(
-	id_rdv INT AUTO_INCREMENT,
+   id_rdv INT AUTO_INCREMENT,
    id_status INT,
    date_rdv DATETIME,
-   PRIMARY KEY( id_rdv,id_status),
+   PRIMARY KEY(id_rdv,id_status),
    FOREIGN KEY(id_status) REFERENCES status(id_status)
 );
 
@@ -64,11 +71,11 @@ CREATE TABLE make_appointment(
 );
 
 CREATE TABLE have_appointment(
-   id_users INT,
    id_status INT,
    id_rdv INT,
-   PRIMARY KEY(id_users, id_status, id_rdv),
-   FOREIGN KEY(id_users) REFERENCES users(id_users),
-   FOREIGN KEY(id_status, id_rdv) REFERENCES appointment(id_status, id_rdv)
+   id_doctor INT,
+   PRIMARY KEY(id_status, id_rdv, id_doctor),
+   FOREIGN KEY(id_status, id_rdv) REFERENCES appointment(id_status, id_rdv),
+   FOREIGN KEY(id_doctor) REFERENCES doctor(id_doctor)
 );
 

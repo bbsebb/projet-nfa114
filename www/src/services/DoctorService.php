@@ -26,8 +26,8 @@ class DoctorService {
 
     
 
-    public function addDoctor(Doctor $doctor):void{
-        
+    public function addDoctor(Doctor $doctor):bool{
+        return $this->doctorRepository->create($doctor);
     }
 
 }

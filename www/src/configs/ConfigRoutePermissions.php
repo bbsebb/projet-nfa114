@@ -8,7 +8,7 @@ class ConfigRoutePermissions implements ConfigI {
     {
         $this->config = array(
             
-            "/admin"=> array("auth"=>true,"roles"=>[]),
+            "/admin"=> array("auth"=>true,"roles"=>["ADMIN"]),
         );
     }
     

@@ -6,15 +6,11 @@ $pdo = new PDO('mysql:host=mysql-nfa114-projet;dbname=db-projet', "user", "ga939
     print_r($e);
 }
 
-$tab[0][] = "0.0";
-$tab[0][] = "0.1";
-$tab[0][] = "0.2";
-$tab[0][] = "0.3";
-$tab[1][] = "1.0";
-$tab[1][] = "1.1";
-$tab[1][] = "1.2";
-$tab[1][] = "1.3";
-$tab[2][] = "2.0";
-$tab[2][] = "2.1";
-$tab[2][] = "2.2";
-$tab[2][] = "2.3";
+// Le message
+$message = "Line 1\r\nLine 2\r\nLine 3";
+
+// Dans le cas où nos lignes comportent plus de 70 caractères, nous les coupons en utilisant wordwrap()
+$message = wordwrap($message, 70, "\r\n");
+
+// Envoi du mail
+mail('sebastien.burckhardt@gmail.com', 'Mon Sujet', $message);
