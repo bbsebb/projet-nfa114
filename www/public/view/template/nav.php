@@ -18,6 +18,7 @@
         <li>
             <a href="<?= $router->generate('profile') ?>">Perso</a>
         </li>
+        <?php if ($auth->hasRoles(["USER"])): ?>
         <!-- Prendre un rdv (client) -->
         <li>
             <a href="<?= $router->generate('agenda') ?>">Prendre rdv</a>
@@ -26,6 +27,7 @@
         <li>
             <a href="<?= $router->generate('myappointment') ?>">Mes rdv</a>
         </li>
+        <?php endif; ?>
         <?php if ($auth->hasRoles(["DOCTOR"])): ?>
         <!-- Rdv du medecin (medecin) -->
         <li>

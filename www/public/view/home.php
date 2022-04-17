@@ -11,6 +11,6 @@ use App\services\UserService;
 require '../vendor/autoload.php';
 
 $alto = new ProxyConnection();
-dump($alto->match("/test/ee"));
+
 
 ?>
