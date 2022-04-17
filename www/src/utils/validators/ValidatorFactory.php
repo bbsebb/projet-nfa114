@@ -52,7 +52,12 @@ class ValidatorFactory
             $flag = false;
             try{
                 $userService = new UserService();
-                $flag = !$userService->userExist($email);
+                if(!$userService->userExist($email) && isset($_SESSION["auth"]) && $_SESSION["auth"]->getEmail()!= $email)  {
+                    $flag = false;
+                } else {
+                    $flag = true;
+                }
+                 
             } catch (Exception $e) {
                 $flag = false;
             }

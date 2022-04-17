@@ -14,6 +14,12 @@ use App\utils\forms\components\Submit;
  */
 class VisiteurToHTML extends AbstractVisiteur
 {
+    private bool $isShowError;
+
+    public function __construct($isShowError = false)
+    {
+        $this->isShowError=  $isShowError;
+    }
 
     public function visiteForm(Form $form): string
     {
@@ -30,7 +36,7 @@ class VisiteurToHTML extends AbstractVisiteur
         $str .= "<div {$this->attributesToHTML($field->getAttributes())}>";
         $str .= $field->getLabel()->accept($this);
         $str .= $field->getInput()->accept($this);
-        if (!$this->checkValidation($field->getInput()->getValue(), $field->getInput()->getValidations()) && $field->getInput()->IsFillOut()) {
+        if (!$this->checkValidation($field->getInput()->getValue(), $field->getInput()->getValidations()) && $field->getInput()->IsFillOut() && $this->isShowError) {
            $field->getSpanError()->setMessageError($this->getMessageErrors($field->getInput()->getValidations()));
             $str .= $field->getSpanError()->accept($this);
         }
@@ -43,7 +49,7 @@ class VisiteurToHTML extends AbstractVisiteur
     }
     public function visiteInput(Input $input): string
     {
-        if (!$this->checkValidation($input->getValue(), $input->getValidations()) && $input->IsFillOut()) {
+        if (!$this->checkValidation($input->getValue(), $input->getValidations()) && $input->IsFillOut() && $this->isShowError) {
             $input->addAttributes("class","input-error");
         }
         return sprintf('<input type="%s" name="%s" value="%s" %s>',$input->getType(),$input->getName(),$input->getValue(),$this->attributesToHTML($input->getAttributes()));

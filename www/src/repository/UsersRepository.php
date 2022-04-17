@@ -30,6 +30,20 @@ class UsersRepository extends Dao
     }
     public function update($user): bool
     {
+        $sql = '
+        UPDATE users SET name=?,forname=?,email=?,password=?,tel=? WHERE id_users= ?
+        ';
+        $date = array(
+            $user->getName(),
+            $user->getForname(),
+            $user->getEmail(),
+            $user->getPassword(),
+            $user->getTel(),
+            $user->getId_users()
+        );
+        $statement = $this->getPdo()->prepare($sql);
+        $rtr = $statement->execute($date);
+        return $rtr;
         return true;
     }
     public function getBy(string $col, string $search): array|User|null

@@ -20,8 +20,9 @@ class AdminController extends AbstractController
     private array $bind = ["title" => "Administration"];
     private static string $pageName = "admin.php";
     private static array $formBuilder = array('App\utils\forms\builders\AdminForm', 'get');
+    
 
-    public function adminGet()
+    public function adminGet():string|false
     {
         $this->table();
         $this->bind["success"] = '';
@@ -43,7 +44,7 @@ class AdminController extends AbstractController
         return ob_get_clean();
     }
 
-    public function adminPost()
+    public function adminPost():string|false
     {
 
         $this->table();
@@ -82,7 +83,7 @@ class AdminController extends AbstractController
         return ob_get_clean();
     }
 
-    public function delDoc(array $params)
+    public function delDoc(array $params):void
     {
         $doctorService = new DoctorService();
         $doctorService->delDoctor($params["id"]);
