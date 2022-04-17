@@ -7,7 +7,8 @@ use App\repository\Dao;
 use App\repository\DoctorRepository;
 
 
-class DoctorService {
+class DoctorService
+{
 
     private Dao $doctorRepository;
 
@@ -16,18 +17,26 @@ class DoctorService {
         $this->doctorRepository = new DoctorRepository();
     }
 
-    public function getAllDoctors() {
+    public function getAllDoctors()
+    {
         return $this->doctorRepository->getAll();
     }
 
-    public function getByID(int $id):Doctor|null  {
-        return $this->doctorRepository->getBy('id_doctor',$id);
+    public function getByID(int $id): Doctor|null
+    {
+        return $this->doctorRepository->getBy('id_doctor', $id);
     }
 
-    
 
-    public function addDoctor(Doctor $doctor):bool{
+
+    public function addDoctor(Doctor $doctor): bool
+    {
         return $this->doctorRepository->create($doctor);
     }
 
+    public function delDoctor(int $id_doctor): bool
+    {
+
+        return $this->doctorRepository->delete($this->getByID($id_doctor));
+    }
 }

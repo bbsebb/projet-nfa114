@@ -75,8 +75,10 @@ class DoctorRepository extends UsersRepository
         return ($doctorArray == false) ? null : $doctorArray;
     }
 
-    public function delete($user): bool
+    public function delete($doctor): bool
     {
-        return true;
+        $sql = 'DELETE FROM users WHERE id_users = ?';
+        $statement = $this->getPdo()->prepare($sql);
+        return $statement->execute(array($doctor->getId_users())); 
     }
 }

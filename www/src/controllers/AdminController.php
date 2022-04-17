@@ -24,7 +24,19 @@ class AdminController extends AbstractController
     public function adminGet()
     {
         $this->table();
-
+        $this->bind["success"] = '';
+        if(isset($_GET["success"]) && $_GET["success"]) {
+            
+             switch ($_GET["success"]) {
+                case 'del':
+                    $msg = 'Suppression effectuée';
+                    break;
+                default:
+                    $msg = 'Opération réussie';
+                    break;
+            }
+            $this->bind['success'] = '<div class="success">'.$msg.'</div> ';
+        }
         $this->bind['form'] = call_user_func(self::$formBuilder)->accept(new  VisiteurToHTML());
         ob_start();
         require_once DIR_VIEW . self::$pageName;
@@ -70,10 +82,17 @@ class AdminController extends AbstractController
         return ob_get_clean();
     }
 
+    public function delDoc(array $params)
+    {
+        $doctorService = new DoctorService();
+        $doctorService->delDoctor($params["id"]);
+        header("Location: /admin?success=del");
+    }
+
     private function table(): void
     {
         $serviceDoctor = new DoctorService();
-        $table = new TableDoctor($serviceDoctor->getAllDoctors(), true, true);
+        $table = new TableDoctor($serviceDoctor->getAllDoctors(), false, true);
         $this->bind['table'] = $table->toHTML();
     }
 }

@@ -27,6 +27,24 @@ a svg{
 #container {
     margin: 0px 10px;
 }
+
+.success{
+    background-color: rgb(24, 173, 74);
+    border-radius: 10px;
+    border:1px solid rgb(16, 121, 51);
+    padding: 10px;
+    text-align: center;
+    margin:10px;
+    position: absolute;
+    top : 10%;
+    right:10%;
+    cursor: pointer;
+}
+
+.success-hidden{
+    display: none;
+}
+
 /* HEADER */
 
 header{

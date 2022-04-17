@@ -20,7 +20,7 @@ class ProxyConnection implements RouterI
      */
     public function __construct(RouterI $router = new Router(), ConfigI $permissionConfig = new ConfigRoutePermissions())
     {
-        $this->router  = $router; 
+        $this->router  = $router;
         $this->permission = $permissionConfig->get();
     }
 
@@ -56,17 +56,29 @@ class ProxyConnection implements RouterI
     private function hasRole(array $roles, Auth|null $auth): bool
     {
         $flag = true;
-        if ($auth !== null && count($roles)>0) {
+        if ($auth !== null && count($roles) > 0) {
             $flag = count(array_intersect($roles, $auth->rolesToArray())) > 0;
         }
         return $flag;
     }
 
-    private function match(string $uri): array
+    public function match(string $uri): array
     {
         $rtr = ["auth" => false, "roles" => []];
-        if (key_exists($uri, $this->permission)) {
-            $rtr = $this->permission[$uri];
+        foreach ($this->permission as $route => $value) {
+            if (preg_match("`(.*)\*$`", $route, $matches)) {
+                $route = $matches[1];
+                $route = preg_quote($route, "/");
+
+                $regex = "`^$route.*$`";
+            } else {
+                $route = preg_quote($route, "/");
+
+                $regex = "`^$route$`";
+            }
+            if(preg_match($regex, $uri, $matches)) {
+                $rtr = $value;
+            }
         }
         return $rtr;
     }
