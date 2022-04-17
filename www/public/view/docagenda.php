@@ -1,1 +1,1 @@
-<h1>Agenda du docteur</h1>
+<h2><?= $this->bind['title']?></h2>
