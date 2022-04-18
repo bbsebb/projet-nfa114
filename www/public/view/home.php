@@ -1,4 +1,4 @@
-<h1>home</h1>
+<h2><?= $this->bind['title']?></h2>
 
 <?php
 
@@ -11,6 +11,6 @@ use App\services\UserService;
 require '../vendor/autoload.php';
 
 $alto = new ProxyConnection();
-dump($alto->match("/test/ee"));
+
 
 ?>

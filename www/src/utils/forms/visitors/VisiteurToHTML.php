@@ -6,6 +6,8 @@ use App\utils\forms\components\Field;
 use App\utils\forms\components\Form;
 use App\utils\forms\components\Input;
 use App\utils\forms\components\Label;
+use App\utils\forms\components\Option;
+use App\utils\forms\components\Select;
 use App\utils\forms\components\SpanError;
 use App\utils\forms\components\Submit;
 
@@ -14,6 +16,12 @@ use App\utils\forms\components\Submit;
  */
 class VisiteurToHTML extends AbstractVisiteur
 {
+    private bool $isShowError;
+
+    public function __construct($isShowError = false)
+    {
+        $this->isShowError=  $isShowError;
+    }
 
     public function visiteForm(Form $form): string
     {
@@ -30,7 +38,7 @@ class VisiteurToHTML extends AbstractVisiteur
         $str .= "<div {$this->attributesToHTML($field->getAttributes())}>";
         $str .= $field->getLabel()->accept($this);
         $str .= $field->getInput()->accept($this);
-        if (!$this->checkValidation($field->getInput()->getValue(), $field->getInput()->getValidations()) && $field->getInput()->IsFillOut()) {
+        if (!$this->checkValidation($field->getInput()->getValue(), $field->getInput()->getValidations()) && $field->getInput()->IsFillOut() && $this->isShowError) {
            $field->getSpanError()->setMessageError($this->getMessageErrors($field->getInput()->getValidations()));
             $str .= $field->getSpanError()->accept($this);
         }
@@ -43,7 +51,7 @@ class VisiteurToHTML extends AbstractVisiteur
     }
     public function visiteInput(Input $input): string
     {
-        if (!$this->checkValidation($input->getValue(), $input->getValidations()) && $input->IsFillOut()) {
+        if (!$this->checkValidation($input->getValue(), $input->getValidations()) && $input->IsFillOut() && $this->isShowError) {
             $input->addAttributes("class","input-error");
         }
         return sprintf('<input type="%s" name="%s" value="%s" %s>',$input->getType(),$input->getName(),$input->getValue(),$this->attributesToHTML($input->getAttributes()));
@@ -61,6 +69,21 @@ class VisiteurToHTML extends AbstractVisiteur
     public function visiteSubmit(Submit $submit): string {
         return sprintf('<input type="%s" value="%s">',$submit::$type,$submit->getValue()) ;
     }
+
+    public function visiteSelect(Select $select): string {
+        $str = sprintf('<select name="%s">',$select->getName()) ;
+        foreach ($select->getChilds() as $childs) {
+            $str .= $childs->accept($this);
+        }
+        $str .= '</select>';
+        return $str;
+    }
+
+    public function visiteOption(Option $option): string {
+        return sprintf('<option value="%s">%s</option>',$option->getValue(),$option->getText()) ;
+    }
+
+    
 
     private function attributesToHTML(array $attributes): string
     {

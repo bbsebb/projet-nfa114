@@ -15,12 +15,13 @@ class ConfigRouteToController implements ConfigI {
         array('GET', '/signout', 'SignOutController#signOut', 'signout'),
         array('GET|POST', '/office', 'OfficeController#office', 'office'),
         array('GET', '/myappointment', 'myappointment', 'myappointment'),
-        array('GET', '/profile', 'profile', 'profile'),
+        array('GET', '/profile', 'ProfileController#profile', 'profile'),
+        array('POST', '/profile', 'ProfileController#profilePost'),
         array('GET', '/docagenda', 'docagenda', 'docagenda'),
         array('GET', '/admin', 'AdminController#adminGet', 'admin'),
         array('POST', '/admin', 'AdminController#adminPost'),
         array('GET', '/admin/del/[i:id]', 'AdminController#delDoc'),
-        array('GET', '/agenda', 'agenda', 'agenda'),
+        array('GET', '/agenda', 'AgendaController#agenda', 'agenda'),
         array('GET', '/test', 'TestController#test', 'php.ini'),
         array('GET', '/error/[a:type]', 'ErrorController#error', 'error'));
     }

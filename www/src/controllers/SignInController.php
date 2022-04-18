@@ -64,7 +64,7 @@ class SignInController extends AbstractController
             $errorMessage = "Erreur inconnue $e";
         }
         $this->bind['errorMessage'] = sprintf('<div class="alert-error">%s</div>',$errorMessage);
-        $this->bind["form"] = $form->accept(new  VisiteurToHTML());
+        $this->bind["form"] = $form->accept(new  VisiteurToHTML(true));
         ob_start();
         require_once DIR_VIEW . self::$pageName;
         return ob_get_clean();

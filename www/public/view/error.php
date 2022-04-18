@@ -1,2 +1,2 @@
-<h1>Erreur</h1>
-<p class="error"><?= $messageError ?></p>
+<h2><?= $this->bind['title']?></h2>
+<p class="error"><?= $this->bind['errorMessage'] ?></p>

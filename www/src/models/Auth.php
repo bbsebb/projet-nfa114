@@ -3,13 +3,15 @@ namespace App\models;
 
 class Auth {
 
+    private string $id_users;
     private string $name;
     private string $forname;
     private array $roles;
     private string $email;
 
-    public function __construct(string $name,string $forname,string $email,array $roles)
+    public function __construct(string $id_users,string $name,string $forname,string $email,array $roles)
     {
+        $this->id_users = $id_users;
         $this->name = $name;
         $this->forname = $forname;
         $this->email = $email;
@@ -115,5 +117,25 @@ class Auth {
             $flag = count(array_intersect($roles, $auth->rolesToArray())) > 0;
         }
         return $flag;
+    }
+
+    /**
+     * Get the value of id_users
+     */ 
+    public function getId_users()
+    {
+        return $this->id_users;
+    }
+
+    /**
+     * Set the value of id_users
+     *
+     * @return  self
+     */ 
+    public function setId_users($id_users)
+    {
+        $this->id_users = $id_users;
+
+        return $this;
     }
 }

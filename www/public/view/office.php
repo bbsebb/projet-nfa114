@@ -1,4 +1,4 @@
-<h1>office</h1>
+<h2><?= $this->bind['title']?></h2>
 <?php
 
 use App\utils\forms\Form;

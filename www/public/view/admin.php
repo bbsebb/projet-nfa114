@@ -1,7 +1,6 @@
-<h1>admin</h1>
-
-<h2>Ajouter un medecin</h2>
+<h2><?= $this->bind['title']?></h2>
+<h3>Ajouter un medecin</h3>
 <?= $this->bind['form'] ?>
-<h2>Liste des médecins</h2>
+<h3>Liste des médecins</h3>
 <?= $this->bind['success'] ?>
 <?= $this->bind['table'] ?>

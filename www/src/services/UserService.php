@@ -21,13 +21,21 @@ class UserService {
         
         $auth = null;
         if(isset($user) && password_verify($password, $user->getPassword()) ) {
-            $auth = new Auth($user->getName(),$user->getForname(),$user->getEmail(), $user->getRoles());
+            $auth = new Auth($user->getId_users(),$user->getName(),$user->getForname(),$user->getEmail(), $user->getRoles());
         }
         return $auth;
     }
 
+    public function findUserBy($searchField,$valueSearched):array|User|null {
+        return $this->userRepository->getBy($searchField,$valueSearched);
+    }
+
     public function addUser(User $user):bool {
         return $this->userRepository->create($user);
+    }
+
+    public function editUser(User $user):bool {
+        return $this->userRepository->update($user);
     }
 
     public function userExist($email):bool{
