@@ -10,6 +10,7 @@ class ConfigRoutePermissions implements ConfigI {
             
             "/admin*"=> array("auth"=>true,"roles"=>["ADMIN"]),
             "/profile"=> array("auth"=>true,"roles"=>[]),
+            "/agenda"=> array("auth"=>true,"roles"=>["USER","ADMIN"]),
             "/test*"=> array("auth"=>true,"roles"=>["ADMIN"]),
         );
     }
