@@ -27,6 +27,10 @@ class DoctorService
         return $this->doctorRepository->getBy('id_doctor', $id);
     }
 
+    public function getAll():array|null {
+        return $this->doctorRepository->getAll();
+    }
+
 
 
     public function addDoctor(Doctor $doctor): bool
