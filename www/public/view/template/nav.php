@@ -31,7 +31,7 @@
         <?php if ($auth->hasRoles(["DOCTOR"])): ?>
         <!-- Rdv du medecin (medecin) -->
         <li>
-            <a href="<?= $router->generate('docagenda') ?>">Mes rdv</a>
+            <a href="<?= $router->generate('docagenda') ?>">Mon agenda</a>
         </li>
         <?php endif; ?>
         <?php if ($auth->hasRoles(["ADMIN"])): ?>

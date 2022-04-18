@@ -6,11 +6,10 @@ $pdo = new PDO('mysql:host=mysql-nfa114-projet;dbname=db-projet', "user", "ga939
     print_r($e);
 }
 
-// Le message
-$message = "Line 1\r\nLine 2\r\nLine 3";
-
-// Dans le cas où nos lignes comportent plus de 70 caractères, nous les coupons en utilisant wordwrap()
-$message = wordwrap($message, 70, "\r\n");
-
-// Envoi du mail
-mail('sebastien.burckhardt@gmail.com', 'Mon Sujet', $message);
+$sql = 'SELECT *
+        FROM have_appointment
+        ';
+        $statement = $pdo->prepare($sql);
+        $statement->execute(array());
+        $appointmentArray = $statement->fetchAll();
+        var_dump($appointmentArray);

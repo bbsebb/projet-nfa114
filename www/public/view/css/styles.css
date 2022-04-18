@@ -3,7 +3,7 @@ body{
     font-family: Georgia, "DejaVu Serif", Norasi, serif;
 }
 
-a[role="button"] {
+a[role="button"],input[type=button] {
     border-radius: 5px;
     border: 1px solid #cecece;
     color:#000000;
@@ -11,9 +11,10 @@ a[role="button"] {
     text-decoration: none;
     padding:5px;
     transition: background-color 1s;
+    margin: 2px 5px;
 }
 
-a[role="button"]:hover {
+a[role="button"]:hover,input[type=button]:hover {
     background-color:#cecece;
     cursor: pointer;
     
