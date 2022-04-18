@@ -6,6 +6,8 @@ use App\utils\forms\components\Field;
 use App\utils\forms\components\Form;
 use App\utils\forms\components\Input;
 use App\utils\forms\components\Label;
+use App\utils\forms\components\Option;
+use App\utils\forms\components\Select;
 use App\utils\forms\components\SpanError;
 use App\utils\forms\components\Submit;
 
@@ -67,6 +69,21 @@ class VisiteurToHTML extends AbstractVisiteur
     public function visiteSubmit(Submit $submit): string {
         return sprintf('<input type="%s" value="%s">',$submit::$type,$submit->getValue()) ;
     }
+
+    public function visiteSelect(Select $select): string {
+        $str = sprintf('<select name="%s">',$select->getName()) ;
+        foreach ($select->getChilds() as $childs) {
+            $str .= $childs->accept($this);
+        }
+        $str .= '</select>';
+        return $str;
+    }
+
+    public function visiteOption(Option $option): string {
+        return sprintf('<option value="%s">%s</option>',$option->getValue(),$option->getText()) ;
+    }
+
+    
 
     private function attributesToHTML(array $attributes): string
     {

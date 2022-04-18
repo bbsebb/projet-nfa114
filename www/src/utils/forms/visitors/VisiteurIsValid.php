@@ -6,6 +6,8 @@ use App\utils\forms\components\Field;
 use App\utils\forms\components\Form;
 use App\utils\forms\components\Input;
 use App\utils\forms\components\Label;
+use App\utils\forms\components\Option;
+use App\utils\forms\components\Select;
 use App\utils\forms\components\SpanError;
 use App\utils\forms\components\Submit;
 /**
@@ -39,6 +41,14 @@ class VisiteurIsValid extends AbstractVisiteur
         return true;
     }
     public function visiteSubmit(Submit $submit): bool
+    {
+        return true;
+    }
+    public function visiteSelect(Select $select): bool
+    {
+        return true;
+    }
+    public function visiteOption(Option $option): bool
     {
         return true;
     }

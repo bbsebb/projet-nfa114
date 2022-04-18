@@ -6,7 +6,7 @@ use App\utils\forms\visitors\AbstractVisiteur;
 /**
  * This class is a input with a validations array to check the value.
  */
-class Input extends Field
+class Input extends Form
 {
 
     static private string $tag = "input";

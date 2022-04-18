@@ -21,7 +21,7 @@ class ConfigRouteToController implements ConfigI {
         array('GET', '/admin', 'AdminController#adminGet', 'admin'),
         array('POST', '/admin', 'AdminController#adminPost'),
         array('GET', '/admin/del/[i:id]', 'AdminController#delDoc'),
-        array('GET', '/agenda', 'agenda', 'agenda'),
+        array('GET', '/agenda', 'AgendaController#agenda', 'agenda'),
         array('GET', '/test', 'TestController#test', 'php.ini'),
         array('GET', '/error/[a:type]', 'ErrorController#error', 'error'));
     }
