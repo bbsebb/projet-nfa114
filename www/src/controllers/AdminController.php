@@ -17,7 +17,7 @@ use PDOException;
 
 class AdminController extends AbstractController
 {
-    private array $bind = ["title" => "Administration"];
+    private array $bind = ["title" => "Administration","errorMessage" => '',"success"=>''];
     private static string $pageName = "admin.php";
     private static array $formBuilder = array('App\utils\forms\builders\AdminForm', 'get');
     
@@ -46,7 +46,7 @@ class AdminController extends AbstractController
 
     public function adminPost():string|false
     {
-
+        
         $this->table();
         $pass = bin2hex(openssl_random_pseudo_bytes(4));
         $form = call_user_func(self::$formBuilder);
@@ -63,21 +63,24 @@ class AdminController extends AbstractController
                 $_POST['email'],
                 $_POST['tel']
             );
-           
-            if (!$form->accept(new VisiteurIsValid())) {
+            
+            if (!$form->accept(new VisiteurIsValid())) {        
                 $errorMessage = "Il y a une erreur dans le formulaire";
             } else {
+                
                 $doctorService->addDoctor($doctor);
                 mail('sebastien.burckhardt@gmail.com', 'Mon Sujet', $pass);
                 header("Location: /admin");
             }
         } catch (PDOException $e) {
-            $errorMessage = "Erreur de connexion à la base donnée";
+            
+            $errorMessage = "Erreur de connexion à la base donnée $e";
         } catch (Exception $e) {
             $errorMessage = "Erreur inconnue";
         }
+        $this->bind["success"] = '';
         $this->bind['errorMessage'] = sprintf('<div class="alert-error">%s</div>', $errorMessage);
-        $this->bind["form"] = $form->accept(new  VisiteurToHTML());
+        $this->bind["form"] = $form->accept(new  VisiteurToHTML(true));
         ob_start();
         require_once DIR_VIEW . self::$pageName;
         return ob_get_clean();
