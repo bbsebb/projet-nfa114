@@ -3,6 +3,7 @@
 namespace App\repository;
 
 use App\models\Appointment;
+use DateTime;
 use Exception;
 use PDO;
 
@@ -35,12 +36,61 @@ class AppointmentRepository extends Dao
             date_create($appointment['datetime_start']),
             date_create($appointment['datetime_end']));
         }
-        $rtr = (count($appointments)==1)?$appointments[0]: $appointments ;
+        $rtr = (is_array($appointments) && count($appointments)==1)?$appointments[0]: $appointments ;
         if($appointmentArray === false) {
             $rtr = null;
         }
         return $rtr;
     }
+
+    public function getById_DoctorAndDate(int $id_doctor,DateTime $date): array|null
+    {
+        $sql = 'SELECT *
+        FROM have_appointment
+        WHERE id_doctor = ? AND DATE_FORMAT(datetime_start,"%d-%m-%Y") = ? ';
+        $statement = $this->getPdo()->prepare($sql);
+        $search = array($id_doctor,$date->format("d-m-Y"));
+        $statement->execute($search);
+        $appointmentArray = $statement->fetchAll();
+        foreach ($appointmentArray as $appointment) {
+            $appointments[] = new Appointment(
+                (new DoctorRepository())->getBy("id_doctor",$appointment['id_doctor']),
+                (new UsersRepository())->getBy("id_users",$appointment['id_users']),
+            date_create($appointment['datetime_start']),
+            date_create($appointment['datetime_end']));
+        }
+        $rtr = $appointments;
+        if($appointmentArray === false) {
+            $rtr = null;
+        }
+        return $rtr;
+    }
+
+    public function getById_UsersAndDate(int $id_users,DateTime $date): array|null
+    {
+        $sql = 'SELECT *
+        FROM have_appointment
+        WHERE id_users = ? AND DATE_FORMAT(datetime_start,"%d-%m-%Y") = ? ';
+        $statement = $this->getPdo()->prepare($sql);
+        $search = array($id_users,$date->format("d-m-Y"));
+        $statement->execute($search);
+        $appointmentArray = $statement->fetchAll();
+        $appointments = [];
+        foreach ($appointmentArray as $appointment) {
+            $appointments[] = new Appointment(
+                (new DoctorRepository())->getBy("id_doctor",$appointment['id_doctor']),
+                (new UsersRepository())->getBy("id_users",$appointment['id_users']),
+            date_create($appointment['datetime_start']),
+            date_create($appointment['datetime_end']));
+        }
+        $rtr = $appointments;
+        if($appointmentArray === false) {
+            $rtr = null;
+        }
+        return $rtr;
+    } 
+
+
     public function getAll(): array|null
     {
         return null;

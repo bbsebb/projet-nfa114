@@ -211,4 +211,25 @@ tbody :first-child td {
     border-top: 2px solid #818181;
 }
 
+/* AGENDA */
+
+input.slot-occupied {
+    color:white;
+    background-color: #500000;
+    text-decoration-line: line-through;
+}
+input.slot-occupied:hover {
+    color:white;
+    background-color: #500000;
+    text-decoration-line: line-through;
+}
+
+input.slot-made {
+    background-color: #01af18;
+}
+
+input.slot-made:hover {
+    background-color: #00720f;
+}
+
 
