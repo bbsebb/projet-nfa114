@@ -31,7 +31,7 @@ class AppointmentRepository extends Dao
         foreach ($appointmentArray as $appointment) {
             $appointments[] = new Appointment(
                 (new DoctorRepository())->getBy("id_doctor",$appointment['id_doctor']),
-                (new DoctorRepository())->getBy("id_users",$appointment['id_users']),
+                (new UsersRepository())->getBy("id_users",$appointment['id_users']),
             date_create($appointment['datetime_start']),
             date_create($appointment['datetime_end']));
         }
