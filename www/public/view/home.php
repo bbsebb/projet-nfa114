@@ -1,16 +1,5 @@
 <h2><?= $this->bind['title']?></h2>
-
-<?php
-
-use App\configs\ConfigRouteToController;
-use App\models\Auth;
-use App\repository\UserRepository;
-use App\routers\ProxyConnection;
-use App\services\UserService;
-
-require '../vendor/autoload.php';
-
-$alto = new ProxyConnection();
-
-
-?>
+<h3>Les docteurs du cabinet : </h3>
+<?= $this->bind['table_doc']?>
+<h3>Les horaires du cabinet : </h3>
+<?= $this->bind['table_open']?>
