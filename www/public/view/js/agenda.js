@@ -1,44 +1,71 @@
 let inputDate = document.querySelector('#date');
 let select = document.querySelector('select[name="doctors"]');
-var idDoctor = null;
+let button = document.querySelector('#button');
+let timeslots = document.querySelector("#timeslots");
+let idDoctor = select.value;
+let  inputs = document.querySelectorAll("#timeslots input:NOT(.slot-occupied)");
+
+addListner = function(inputs) {
+  inputs.forEach(input => {
+    input.addEventListener('click', function(e) {
+      makeTimeslots(this);    
+    })
+  });
+}
+ 
 var dateTime = new Date();
 (function () {
-    select.option
     inputDate.valueAsDate = new Date();
+    addListner(inputs);
 })()
 
 select.addEventListener('change', function(e) {
    idDoctor = e.target.value;
+   listTimeslots();
 })
 
 inputDate.addEventListener('change', function(e) {
     dateTime = e.target.valueAsDate;
+    listTimeslots();
  })
 
+makeTimeslots = function(input) {
+  let xmlhttp = new XMLHttpRequest();
 
- let button = document.querySelector('#button');
-
- let test = document.querySelector("#test");
-
- ajax = function() {
-     
-    let xmlhttp = new XMLHttpRequest();
-    
-    xmlhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        test.innerHTML = this.responseText;
-      } else {
-        test.innerHTML = "err";
-      }
+  
+  xmlhttp.onreadystatechange = function() {  
+    if (this.readyState == 4 && this.status == 200) {
+      input.classList.add('slot-made');  
+    } else {
       
+    }
+  };
+    let url = 'agenda/'+idDoctor+'/'+dateTime.getFullYear()+'-'+(dateTime.getMonth()+1)+'-'+dateTime.getDate();
+    xmlhttp.open("POST",url, true);
+    xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xmlhttp.send("time="+input.value);   
+}
+
+
+ listTimeslots = function() {
+    let xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+      
+      if (this.readyState == 4 && this.status == 200) {
+        timeslots.innerHTML = this.responseText;
+        inputs = document.querySelectorAll("#timeslots input:NOT(.slot-occupied)");
+        addListner(inputs);
+      } else {
+        timeslots.innerHTML = 'erreur de chargement';
+      }
     };
-    
-    xmlhttp.open("GET", "admin/test", true);
-    xmlhttp.send();
-    alert(JSON.stringify(xmlhttp));
+      let url = 'agenda/'+idDoctor+'/'+dateTime.getFullYear()+'-'+(dateTime.getMonth()+1)+'-'+dateTime.getDate();
+      xmlhttp.open("GET",url, true); 
+    xmlhttp.send(); 
  }
 
-  button.addEventListener('click',function() {
-    ajax();
-  });
+
+
+
 

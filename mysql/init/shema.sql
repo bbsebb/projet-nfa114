@@ -16,66 +16,98 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `db-projet` DEFAULT CHARACTER SET utf8 ;
 USE `db-projet` ;
-CREATE TABLE users(
-   id_users INT AUTO_INCREMENT,
-   email VARCHAR(50) ,
-   password VARCHAR(125) ,
-   name VARCHAR(50) ,
-   forname VARCHAR(50) ,
-   tel VARCHAR(50) ,
-   PRIMARY KEY(id_users)
-);
 
-CREATE TABLE roles(
-   id_roles INT AUTO_INCREMENT,
-   name VARCHAR(50) ,
-   PRIMARY KEY(id_roles)
-);
+DROP TABLE IF EXISTS `doctor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `doctor` (
+  `id_doctor` int NOT NULL AUTO_INCREMENT,
+  `id_users` int NOT NULL,
+  PRIMARY KEY (`id_doctor`),
+  KEY `doctor_ibfk_1` (`id_users`),
+  CONSTRAINT `doctor_ibfk_1` FOREIGN KEY (`id_users`) REFERENCES `users` (`id_users`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE status(
-   id_status INT AUTO_INCREMENT,
-   name VARCHAR(50) ,
-   PRIMARY KEY(id_status)
-);
+--
+-- Table structure for table `has_role`
+--
 
-CREATE TABLE doctor(
-   id_doctor INT AUTO_INCREMENT,
-   id_users INT NOT NULL,
-   PRIMARY KEY(id_doctor),
-   FOREIGN KEY(id_users) REFERENCES users(id_users)
-);
+DROP TABLE IF EXISTS `has_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `has_role` (
+  `id_users` int NOT NULL,
+  `id_roles` int NOT NULL,
+  PRIMARY KEY (`id_users`,`id_roles`),
+  KEY `has_role_ibfk_2` (`id_roles`),
+  CONSTRAINT `has_role_ibfk_1` FOREIGN KEY (`id_users`) REFERENCES `users` (`id_users`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `has_role_ibfk_2` FOREIGN KEY (`id_roles`) REFERENCES `roles` (`id_roles`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE appointment(
-   id_rdv INT AUTO_INCREMENT,
-   id_status INT,
-   date_rdv DATETIME,
-   PRIMARY KEY(id_rdv,id_status),
-   FOREIGN KEY(id_status) REFERENCES status(id_status)
-);
+--
+-- Table structure for table `have_appointment`
+--
 
-CREATE TABLE has_role(
-   id_users INT,
-   id_roles INT,
-   PRIMARY KEY(id_users, id_roles),
-   FOREIGN KEY(id_users) REFERENCES users(id_users),
-   FOREIGN KEY(id_roles) REFERENCES roles(id_roles)
-);
+DROP TABLE IF EXISTS `have_appointment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `have_appointment` (
+  `id_have_appointment` int NOT NULL AUTO_INCREMENT,
+  `id_doctor` int DEFAULT NULL,
+  `id_users` int DEFAULT NULL,
+  `datetime_start` datetime DEFAULT NULL,
+  `datetime_end` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_have_appointment`),
+  KEY `have_appointment_doctor_idx` (`id_doctor`),
+  KEY `have_appointment_users_idx` (`id_users`),
+  CONSTRAINT `have_appointment_doctor` FOREIGN KEY (`id_doctor`) REFERENCES `doctor` (`id_doctor`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `have_appointment_users` FOREIGN KEY (`id_users`) REFERENCES `users` (`id_users`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE make_appointment(
-   id_users INT,
-   id_status INT,
-   id_rdv INT,
-   PRIMARY KEY(id_users, id_status, id_rdv),
-   FOREIGN KEY(id_users) REFERENCES users(id_users),
-   FOREIGN KEY(id_status, id_rdv) REFERENCES appointment(id_status, id_rdv)
-);
+--
+-- Table structure for table `roles`
+--
 
-CREATE TABLE have_appointment(
-   id_status INT,
-   id_rdv INT,
-   id_doctor INT,
-   PRIMARY KEY(id_status, id_rdv, id_doctor),
-   FOREIGN KEY(id_status, id_rdv) REFERENCES appointment(id_status, id_rdv),
-   FOREIGN KEY(id_doctor) REFERENCES doctor(id_doctor)
-);
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `roles` (
+  `id_roles` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_roles`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id_users` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(50) DEFAULT NOT NULL,
+  `password` varchar(125) DEFAULT NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `forname` varchar(50) DEFAULT NULL,
+  `tel` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_users`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb3;
+INSERT INTO `roles` VALUES (1,'USER'),(2,'DOCTOR'),(3,'ADMIN');
+INSERT INTO users (email,password,name,forname,tel) VALUE ('admin@admin.com','$2y$10$5uZilvqu4O1VqilmxLGTJuEQNyjLi7d3J/MQ4n3J6090l0pd.aw0S','admin','admin','');
+SELECT @last_id := LAST_INSERT_ID();
+INSERT INTO has_role (id_users,id_roles) VALUE (@last_id, (SELECT id_roles FROM roles WHERE name ="ADMIN")); 
+
+INSERT INTO users (email,password,name,forname,tel) VALUE ('dupont@docteur.com','$2y$10$yGdST5Pnntl43XRe4r/KBedFaU7hXYUF07RH..v1taYPj.uC544WC','dupont','docteur','');
+SELECT @last_id := LAST_INSERT_ID();
+INSERT INTO doctor (id_users) VALUE(@last_id);
+INSERT INTO has_role (id_users,id_roles) VALUE (@last_id, (SELECT id_roles FROM roles WHERE name ="DOCTOR"));
+INSERT INTO users (email,password,name,forname,tel) VALUE ('dupond@docteur.com','$2y$10$yGdST5Pnntl43XRe4r/KBedFaU7hXYUF07RH..v1taYPj.uC544WC','dupond','docteur','');
+SELECT @last_id := LAST_INSERT_ID();
+INSERT INTO doctor (id_users) VALUE(@last_id);
+INSERT INTO has_role (id_users,id_roles) VALUE (@last_id, (SELECT id_roles FROM roles WHERE name ="DOCTOR"));

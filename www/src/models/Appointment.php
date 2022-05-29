@@ -8,20 +8,40 @@ use DateTime;
 class Appointment 
 {
     const TABLE_NAME = 'appointment';
+    private int|null $id_appointment;
     private Doctor|null $doctor;
     private User|null $user;
     private DateTime|null $datetime_start;
     private DateTime|null $datetime_end;
 
-    public function __construct(Doctor|null $doctor = null,User|null $user = null, DateTime|null $datetime_start, DateTime|null $datetime_end)
+    public function __construct(int|null $id_appointment = null,Doctor|null $doctor = null,User|null $user = null, DateTime|null $datetime_start, DateTime|null $datetime_end)
     {
+        $this->id_appointment = $id_appointment;
         $this->doctor = $doctor;
         $this->user = $user;
         $this->datetime_start = $datetime_start;
         $this->datetime_end = $datetime_end;
         
     }
+/**
+     * Get the value of doctor
+     */ 
+    public function getId_appointment()
+    {
+        return $this->id_appointment;
+    }
 
+    /**
+     * Set the value of doctor
+     *
+     * @return  self
+     */ 
+    public function setId_appointment($id_appointment)
+    {
+        $this->id_appointment = $id_appointment;
+
+        return $this;
+    }
 
     /**
      * Get the value of doctor

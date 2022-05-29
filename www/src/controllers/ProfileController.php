@@ -70,6 +70,7 @@ class ProfileController extends AbstractController
                 $errorMessage = "Mauvais mot de passe";
             } else {
                 $userService->editUser($user);
+                $_SESSION['auth'] = $userService->getAuth($_POST["email"], $password);
                 header("Location: /profile");
             }
         } catch (PDOException $e) {

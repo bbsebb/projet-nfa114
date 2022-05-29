@@ -12,6 +12,8 @@ class ConfigRoutePermissions implements ConfigI {
             "/profile"=> array("auth"=>true,"roles"=>[]),
             "/agenda"=> array("auth"=>true,"roles"=>["USER","ADMIN"]),
             "/test*"=> array("auth"=>true,"roles"=>["ADMIN"]),
+            "/myappointment*"=> array("auth"=>true,"roles"=>["USER","ADMIN"]),
+            "/docagenda"=> array("auth"=>true,"roles"=>["DOCTOR"]),
         );
     }
     

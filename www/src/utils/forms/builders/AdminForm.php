@@ -14,22 +14,22 @@ class AdminForm extends AbstractFormBuilder{
     public static function get(string $action = ""):AbstractForm {
         $name = new Field(
             new Label("Nom"),
-            new Input("name","","text",[]),
+            new Input("name","","text",[ValidatorFactory::sizeStr(3)]),
             new SpanError()
         );
         $forname = new Field(
             new Label("Prenom"),
-            new Input("forname","","text",[]),
+            new Input("forname","","text",[ValidatorFactory::sizeStr(3)]),
             new SpanError()
         );
         $tel = new Field(
             new Label("Téléphone"),
-            new Input("tel","","text",[]),
+            new Input("tel","","text",[ValidatorFactory::sizeStr(3)]),
             new SpanError()
         );
         $emailFiel = new Field(
             new Label("Email"),
-            new Input("email","","email",[ValidatorFactory::sameEmail()]),
+            new Input("email","","email",[ValidatorFactory::sameEmail(),ValidatorFactory::isEmail()]),
             new SpanError()
         );
 

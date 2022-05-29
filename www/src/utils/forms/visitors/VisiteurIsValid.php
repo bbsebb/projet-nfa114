@@ -26,7 +26,7 @@ class VisiteurIsValid extends AbstractVisiteur
     }
     public function visiteField(Field $field): bool
     {
-        return $field->getInput()->accept($this);
+        return $field->getForm()->accept($this);
     }
     public function visiteLabel(Label $label): bool
     {

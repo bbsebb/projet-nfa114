@@ -32,7 +32,7 @@ class VisiteurFillOut extends AbstractVisiteur
     }
     public function visiteField(Field $field): void
     {
-         $field->getInput()->accept($this);
+         $field->getForm()->accept($this);
     }
     public function visiteLabel(Label $label): void
     {

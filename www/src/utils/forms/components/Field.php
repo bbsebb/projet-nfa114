@@ -4,7 +4,7 @@ namespace App\utils\forms\components;
 use App\utils\forms\visitors\AbstractVisiteur;
 
 /**
- * This class is a div with a label, a input and a span with the error message
+ * This class is a div with a label, a form and a span with the error message
  */
 class Field extends Form{
 
@@ -13,22 +13,22 @@ class Field extends Form{
     
     private array $attributes;
     private Label $label;  
-    private Input $input; 
+    private Form $form; 
     private SpanError $spanError; 
     
 
     /**
      * @param Label $label is the label contained in this class
-     * @param Input $input is the input contained in this class
+     * @param Form $form is the form contained in this class
      * @param SpanError $spanError is the span with the error message contained in this class
      * @param array $attributes is the field tag attributes 
      */
-    public function __construct(Label $label,Input $input,SpanError $spanError,array $attributes = ["class"=>"form-field-group"])
+    public function __construct(Label $label,Form $form,SpanError $spanError,array $attributes = ["class"=>"form-field-group"])
     {
 
         $this->attributes = $attributes;
         $this->label = $label;
-        $this->input = $input;
+        $this->form = $form;
         $this->spanError = $spanError;
 
         
@@ -57,21 +57,21 @@ class Field extends Form{
     }
 
     /**
-     * Get the value of input
+     * Get the value of form
      */ 
-    public function getInput(): Input
+    public function getForm(): Form
     {
-        return $this->input;
+        return $this->form;
     }
 
     /**
-     * Set the value of input
+     * Set the value of form
      *
      * @return  self
      */ 
-    public function setInput($input): self
+    public function setForm($form): self
     {
-        $this->input = $input;
+        $this->form = $form;
 
         return $this;
     }

@@ -6,6 +6,7 @@ var successHidden = function () {
         element.addEventListener('click', function(e) {
             element.classList.remove('success');
             element.classList.add('success-hidden');
+            console.log('tes');
         })
     });
 }

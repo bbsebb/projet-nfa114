@@ -25,9 +25,7 @@ a svg{
     vertical-align : middle;
 }
 
-#container {
-    margin: 0px 10px;
-}
+
 
 .success{
     background-color: rgb(24, 173, 74);
@@ -45,6 +43,14 @@ a svg{
 .success-hidden{
     display: none;
 }
+
+/* CONTAINER */
+
+#container {
+    margin: 0px 10px;
+    min-height: 80vh; 
+}
+
 
 /* HEADER */
 
@@ -81,6 +87,13 @@ header a {
     border:3px solid #ffffff7a;
     border-radius: 5px;
     
+}
+
+/* FOOTER */
+#footer{
+    font-size: 0.8em;
+    text-align: right;
+    margin: 20px;
 }
 
 /* BAR NAVIGATION LATERALE */
@@ -212,6 +225,11 @@ tbody :first-child td {
 }
 
 /* AGENDA */
+
+#timeslots {
+    margin: 20px auto;
+    width: 70%;
+}
 
 input.slot-occupied {
     color:white;

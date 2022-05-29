@@ -15,7 +15,9 @@ class UsersRepository extends Dao
     public function create($user): bool
     {
         $sql = '
-        INSERT INTO users (name,forname,email,password,tel) VALUES (?,?,?,?,?)
+        INSERT INTO users (name,forname,email,password,tel) VALUES (?,?,?,?,?);
+        SELECT @last_id := LAST_INSERT_ID( );
+        INSERT INTO has_role (id_users,id_roles) VALUE (@last_id, (SELECT id_roles FROM roles WHERE name="USER"));
         ';
         $date = array(
             $user->getName(),

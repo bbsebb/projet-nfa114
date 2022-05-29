@@ -20,7 +20,7 @@ class VisiteurToHTML extends AbstractVisiteur
 
     public function __construct($isShowError = false)
     {
-        $this->isShowError=  $isShowError;
+        $this->isShowError =  $isShowError;
     }
 
     public function visiteForm(Form $form): string
@@ -34,16 +34,19 @@ class VisiteurToHTML extends AbstractVisiteur
     }
     public function visiteField(Field $field): string
     {
-        $str ="";
+        $str = "";
         $str .= "<div {$this->attributesToHTML($field->getAttributes())}>";
         $str .= $field->getLabel()->accept($this);
-        $str .= $field->getInput()->accept($this);
-        if (!$this->checkValidation($field->getInput()->getValue(), $field->getInput()->getValidations()) && $field->getInput()->IsFillOut() && $this->isShowError) {
-           $field->getSpanError()->setMessageError($this->getMessageErrors($field->getInput()->getValidations()));
-            $str .= $field->getSpanError()->accept($this);
+        $str .= $field->getForm()->accept($this);
+        if ($field->getForm() instanceof Input) {
+            $input =  $field->getForm();
+            if (!$this->checkValidation($input->getValue(), $input->getValidations()) && $input->IsFillOut() && $this->isShowError) {
+                $field->getSpanError()->setMessageError($this->getMessageErrors($input->getValidations()));
+                $str .= $field->getSpanError()->accept($this);
+            }
         }
         $str .= '</div>';
-        return $str; 
+        return $str;
     }
     public function visiteLabel(Label $label): string
     {
@@ -52,26 +55,27 @@ class VisiteurToHTML extends AbstractVisiteur
     public function visiteInput(Input $input): string
     {
         if (!$this->checkValidation($input->getValue(), $input->getValidations()) && $input->IsFillOut() && $this->isShowError) {
-            $input->addAttributes("class","input-error");
+            $input->addAttributes("class", "input-error");
         }
-        return sprintf('<input type="%s" name="%s" value="%s" %s>',$input->getType(),$input->getName(),$input->getValue(),$this->attributesToHTML($input->getAttributes()));
-
+        return sprintf('<input type="%s" name="%s" value="%s" %s>', $input->getType(), $input->getName(), $input->getValue(), $this->attributesToHTML($input->getAttributes()));
     }
     public function visiteSpanError(SpanError $span): string
     {
         $messageError = "";
         foreach ($span->getMessageError() as $value) {
-            $messageError .= $value ." | ";
+            $messageError .= $value . " | ";
         }
         return "<span class=\"error\">$messageError</span>";
     }
 
-    public function visiteSubmit(Submit $submit): string {
-        return sprintf('<input type="%s" value="%s">',$submit::$type,$submit->getValue()) ;
+    public function visiteSubmit(Submit $submit): string
+    {
+        return sprintf('<input type="%s" value="%s">', $submit::$type, $submit->getValue());
     }
 
-    public function visiteSelect(Select $select): string {
-        $str = sprintf('<select name="%s">',$select->getName()) ;
+    public function visiteSelect(Select $select): string
+    {
+        $str = sprintf('<select name="%s">', $select->getName());
         foreach ($select->getChilds() as $childs) {
             $str .= $childs->accept($this);
         }
@@ -79,11 +83,12 @@ class VisiteurToHTML extends AbstractVisiteur
         return $str;
     }
 
-    public function visiteOption(Option $option): string {
-        return sprintf('<option value="%s">%s</option>',$option->getValue(),$option->getText()) ;
+    public function visiteOption(Option $option): string
+    {
+        return sprintf('<option value="%s">%s</option>', $option->getValue(), $option->getText());
     }
 
-    
+
 
     private function attributesToHTML(array $attributes): string
     {
@@ -110,10 +115,10 @@ class VisiteurToHTML extends AbstractVisiteur
     {
         $rtr = [];
         foreach ($validations as $validation) {
-            $rtr[] = $validation->getMessageError();
+            if (!$validation->isValid()) {
+                $rtr[] = $validation->getMessageError();
+            }
         }
         return $rtr;
     }
-
-
 }
