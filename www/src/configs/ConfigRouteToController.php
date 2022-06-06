@@ -7,7 +7,7 @@ class ConfigRouteToController implements ConfigI {
     public function __construct()
     {
         $this->config = array(
-        array('GET|POST', '/', 'HomeController#home', 'home'),
+        array('GET|POST', '/', 'OfficeController#office', 'home'),
         array('GET', '/signin/[a:url]?', 'SignInController#signInGet', 'signin'),
         array('POST', '/signin/[a:url]?', 'SignInController#signInPost'),
         array('GET', '/signup', 'SignUpController#signUpGet', 'signup'),
